@@ -57,8 +57,8 @@ public class SeqStep {
         mainStoryKnot = val;
         return this;
     }
-    public SeqStep SetMinigameRound(int roundIndex, PrioRank rank, params string[] mgNames) {
-        mgRoundData = new RoundData(roundIndex, rank, mgNames);
+    public SeqStep SetMinigameRound(int roundIndex, params string[] mgNames) {
+        mgRoundData = new RoundData(roundIndex, mgNames);
         return this;
     }
     //public SeqStep SetMinigameRound(RoundData roundData) {//PrioRank rank, params string[] mgNames) {

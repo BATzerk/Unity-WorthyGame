@@ -11,8 +11,6 @@ public class BaseViewElement : MonoBehaviour {
     protected UserData ud { get { return dm.UserData; } }
     protected EventManager em { get { return GameManagers.Instance.EventManager; } }
     protected ResourcesHandler rh { get { return ResourcesHandler.Instance; } }
-    protected List<Priority> userPrios { get { return ud.userPrios; } }
-    protected int NumUserPrios { get { return userPrios.Count; } }
     public bool IsVisible { get { return this.gameObject.activeInHierarchy; } }
     public Vector3 Pos {
         get { return transform.localPosition; }

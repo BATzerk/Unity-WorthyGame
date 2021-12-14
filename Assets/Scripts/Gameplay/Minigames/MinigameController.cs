@@ -8,84 +8,6 @@ using MinigameNamespace;
 using System.Linq;
 
 public class MinigameController : BaseViewElement {
-    /*
-    static private readonly RoundData[] roundDatas = {
-        //// TESTING
-        //new RoundData(new string[] {
-        //    "UFOShootDown",
-            
-        //    "DoD",
-        //    "KingOfHill",
-            
-        //    "ComfyChair",
-        //    "MakeADate",
-        //    "WindowChuck",
-        //}),
-        
-        // ROUND 1: All 20
-        new RoundData(PrioRank.Any,new string[] {
-            "BurningBuilding",
-            "BurningBuilding",
-            "HaveToPee",
-            "DoD",
-            "PatOnBack",
-            "DoD",
-        }),
-        
-        // ROUND 2
-        new RoundData(PrioRank.Any,new string[] {
-            "ComfyChair",
-            "KingOfHill",
-            "FreeTonight",
-            "KnifeToMurder",
-            "KingOfHill",
-            "BasketCatch",
-        }),
-        // ROUND 4
-        new RoundData(PrioRank.Any,new string[] {
-            "DoD",
-            "UFOAbduction",
-            "DoD",
-            "UFOHungry",
-            "KingOfHill",
-            "UFOShootDown",
-        }),
-        // ROUND 5
-        new RoundData(PrioRank.Any,new string[] {
-            "LazySusan",
-            "CaptchaFill",
-            "DoD",
-            "WindowChuck",
-            "KingOfHill",
-        }),
-        
-        
-        
-        // ROUND 3: Matchmakin'!
-        new RoundData(PrioRank.Any,new string[] {
-            "DoD",
-            "MakeADate",
-            "PickDateLocation0",
-            "DoD",
-            "MakeADate",
-            "PickDateLocation1",
-            "KingOfHill",
-            "WeddingInvites",
-        }),
-        // ROUND 6: ____
-        new RoundData(PrioRank.Any,new string[] {
-            "VendingMachine",
-            "KissMarryKill",
-            "ExamComfort",
-            "SinkingShip",
-            "SaveDrowning",
-        }),
-        // ROUND 7: ____
-        new RoundData(PrioRank.Any,new string[] {
-            "DoD",
-        }),
-    };
-    */
     
     // Constants
     public static int NumTotalRounds = 6;
@@ -97,7 +19,6 @@ public class MinigameController : BaseViewElement {
     [SerializeField] public  MinigameTimerBar commonTimerBar=null; // yellow, generic top bar.
     // Properties
     private Dictionary<string, Minigame> allMinigames; // GameObject name, Minigame.
-    public Contestant[] AllContestants { get; private set; } // one for each Priority.
     //public int CurrRoundIndex { get; private set; }
     private int numTimesMadeUpcomingContListThisRound; // for developer.
     // References
@@ -272,14 +193,10 @@ public class MinigameController : BaseViewElement {
         HideAllMinigames();
         // Set currMinigame!
         currMinigame = allMinigames[_name];
-        // Pull right number of contestants.
-        List<Contestant> contestants = PullContestantsForMinigame(currMinigame);
         // Show titleCurtain! It waits for a tap to begin the minigame.
         titleCurtain.Appear(currMinigame, contestants);
     }
     public void EndCurrMinigame() {
-        // Order userPrios after every minigame!
-        ud.OrderUserPriosByBattle();
         // Out of minigames! End the round.
         if (CurrRoundData.IsLastMinigame()) {
             EndCurrRound();
@@ -327,15 +244,6 @@ public class MinigameController : BaseViewElement {
     }
     
     
-    
-    
-    // ----------------------------------------------------------------
-    //  Doers
-    // ----------------------------------------------------------------
-    public void AddCouple(Contestant cA, Contestant cB) {
-        couples.Add(new ContCouple(cA,cB));
-    }
-    
 
 
     // ----------------------------------------------------------------
@@ -351,10 +259,6 @@ public class MinigameController : BaseViewElement {
             SceneHelper.ReloadScene();
             return;
         }
-        // C = Print Contestants list
-        if (Input.GetKeyDown(KeyCode.C)) {
-            Debug_PrintContestantsList();
-        }
     }
 
 
@@ -362,12 +266,6 @@ public class MinigameController : BaseViewElement {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //  Debug
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //private void CheckForUpcomingContestantsRequestError() {
-    //    // If we've specified the rank for this minigame...
-    //    if (CurrRoundData.prioRank!=PrioRank.Any || CurrRoundData.prioRank!=PrioRank.Undefined) {
-    //        int numGamesInRound = 0;
-    //    }
-    //}
     public void Debug_StartPrevMinigame() {
         CurrRoundData.CurrMinigameIndex --;
         StartCurrMinigame();
@@ -381,190 +279,6 @@ public class MinigameController : BaseViewElement {
     }
     
     
-    
-    //private void Debug_PrintUpcomingMinigames() {
-    //    string str = "Upcoming Minigames ("+upcomingMinigames.Count+"):\n";
-    //    for (int i=0; i<upcomingMinigames.Count; i++) {
-    //        str += "   " + upcomingMinigames[i];
-    //        if (i < upcomingMinigames.Count-1) { str += "\n"; }
-    //    }
-    //    Debug.Log(str);
-    //}
-    private void Debug_PrintContestantsList() {
-        string str = "Contestants:\n";
-        for (int i=0; i<AllContestants.Length; i++) {
-            Contestant c = AllContestants[i];
-            str += "   " + c + " - won: " + c.myPrio.NumBattlesWon + ", lost: " + c.myPrio.NumBattlesLost + ", tied: " + c.myPrio.NumBattlesTied;
-            if (i < AllContestants.Length-1) { str += "\n"; }
-        }
-        Debug.Log(str);
-    }
-    
-    
-    
-    
-    /*
-    private List<string> GetUpcomingMinigames() {
-        List<Minigame> options = new List<Minigame>();
-        int numContestants = upcomingContestants.Count;
-        
-        List<string> list = new List<string>();
-        while (numContestants > 0) {
-            // Out of options? Make more.
-            if (options.Count == 0) {
-                options = new List<Minigame>(allMinigames.Values);
-                options.Shuffle();
-                // Avoid repeats: If first option is same as last list item, just REVERSE the whole list.
-                if (list.Count>0 && list[list.Count-1]==options[0].name) {//.GetType()) {
-                    options.Reverse();
-                }
-            }
-            // Take the first option!
-            Minigame option = options[0];
-            list.Add(option.name);
-            options.RemoveAt(0);
-            // Decrement numContestants based on how many this minigame uses.
-            numContestants -= option.NumContestants();
-        }
-        
-        // Return!
-        return list;
-    }
-    */
-    
-    /*
-    //private List<Minigame> currMinigames;
-    //private int currMinigameIndex; // index in currMinigames list.
-    //private int currRoundIndex; // which round it is. Each round includes a battle with every priority.
-    
-    // ----------------------------------------------------------------
-    //  Starting Battles/Rounds
-    // ----------------------------------------------------------------
-    //private void StartNextMinigameOrRound() {
-    //    // Round over? Start next round!
-    //    if (currMinigameIndex+1 >= currMinigames.Count) {
-    //        SetCurrRound(currRoundIndex+1);
-    //    }
-    //    // Otherwise, start next battle!
-    //    else {
-    //        SetCurrBattle(currMinigameIndex+1);
-    //    }
-    //}
-    private void SetCurrRound(int _index) {
-        currRoundIndex = _index;
-        
-        // Order contestants and update percentFullyOrdered.
-        allContestants.Shuffle(); // shuffle them FIRST before ordering, so the order isn't predictable.
-        allContestants = allContestants.OrderBy(c => c.NumBattlesWon).ToArray<Contestant>();
-        UpdatePercentFullyOrdered();
-        // Make list of upcoming Battles!
-        MakeBattleList();
-        
-        Debug_PrintContestantsList();
-        Debug_PrintBattlesList();
-        
-        // Start the first battle!
-        SetCurrBattle(0);
-    }
-    private void SetCurrBattle(int _index) {
-        currMinigameIndex = _index;
-        currBattle = battles[currMinigameIndex];
-        
-        StartCoroutine(Coroutine_SeqStartBattle());
-    }
-    
-    
-    // ----------------------------------------------------------------
-    //  Events
-    // ----------------------------------------------------------------
-    public void OnMinigameOver() {
-        StartCoroutine(Coroutine_SeqBattleOver(prioButton));
-    }
-    
-    private IEnumerator Coroutine_SeqBattleOver(PrioButton prioButton) {
-        // Save outcome and update battleState.
-        SaveBattleOutcome(prioButton);
-        battleState = BattleStates.PostBattle;
-        // Animate buttons out.
-        prioButtonA.AnimateBattleOver(prioButton);
-        prioButtonB.AnimateBattleOver(prioButton);
-        yield return new WaitForSeconds(prioButton==null ? 0.64f : 0.4f); // wait a moment longer if they didn't choose.
-        
-        // Start next battle or round!
-        StartNextMinigameOrRound();
-    }
-    
-    // ----------------------------------------------------------------
-    //  Doers
-    // ----------------------------------------------------------------
-    private void MakeBattleList() {
-        battles = new List<Battle>();
-        // Add regular priorities battles.
-        int numRegularBattles = Mathf.CeilToInt(allContestants.Length*0.5f);
-        for (int i=0; i<numRegularBattles; i++) {
-            int indexA = i*2;
-            int indexB = (i*2+1) % allContestants.Length; // pick the next one, OR wrap around to start.
-            if (MathUtils.RandomBool()) { // 50% chance to swap the two indexes for variety.
-                int temp = indexB;
-                indexB = indexA;
-                indexA = temp;
-            }
-            battles.Add(new Battle(allContestants[indexA],allContestants[indexB]));
-        }
-        // Add some silly options.
-        int numSillyBattles = 10;
-        for (int i=0; i<numSillyBattles; i++) {
-            battles.Add(sillyBattleOptions[sillyBattleIndex]);
-            sillyBattleIndex = (sillyBattleIndex+1) % sillyBattleOptions.Length; // increment sillyBattleIndex!
-        }
-        battles.Shuffle();
-    }
-    private void SaveBattleOutcome(PrioButton prioButton) {
-        // We DID pick a winner!
-        if (prioButton != null) {
-            Contestant winner = prioButton.MyContestant;
-            Contestant loser = OtherContestant(winner);
-            winner.NumBattlesWon ++;
-            loser.NumBattlesLost ++;
-        }
-        // We did NOT pick a winner.
-        else {
-            ContestantA.NumBattlesTied ++;
-            ContestantB.NumBattlesTied ++;
-        }
-    }
-    
-    
-    
-    // ----------------------------------------------------------------
-    //  Close
-    // ----------------------------------------------------------------
-    public void Close() {
-        SetVisible(false);
-    }
-    
-    
-    
-    // Debug
-    private void Debug_PrintBattlesList() {
-        string str = "Battles:\n";
-        for (int i=0; i<battles.Count; i++) {
-            str += "   " + battles[i].ToString();
-            if (i < battles.Count-1) { str += "\n"; }
-        }
-        Debug.Log(str);
-    }
-    
-    private void OnGUI() {
-        // percentFullyOrdered.
-        string str = Mathf.Round(percentFullyOrdered*100f) + "%";
-        GUIStyle style = new GUIStyle {
-            fontSize = 18,
-        };
-        style.normal.textColor = Color.white;
-        GUI.Label(new Rect(10,10, 100,100), str, style);
-    }
-    */
 
 
 }

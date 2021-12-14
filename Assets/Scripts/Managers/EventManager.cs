@@ -23,7 +23,6 @@ public class EventManager {
     
     public void OnCharFinishedRevealingSpeechText() { CharFinishedRevealingSpeechTextEvent?.Invoke(); }
     public void OnSetCurrSeqAddr(SeqAddress addr) { SetCurrSeqAddrEvent?.Invoke(addr); }
-    public void OnSortedUserPrios() { SortedUserPriosEvent?.Invoke(); }
     
     
     

@@ -9,23 +9,14 @@ public class GameController : MonoBehaviour {
     // Components
     [SerializeField] private Animator randoAnims=null;
     [SerializeField] private CharViewHandler charHandler=null;
-    [SerializeField] public  FinalRankSample finalRankSample=null;
     [SerializeField] private GameObject go_nextButton=null;
     [SerializeField] private GameTimeController gameTimeCont=null;
     [SerializeField] private MainStory mainStory=null;
     [SerializeField] private BranchingStoryController storyCont=null;
     [SerializeField] private TextMeshProUGUI t_nextButton=null;
     // Main Views
-    [SerializeField] private ElimigameController elimigameCont=null;
     [SerializeField] private MinigameController minigameCont=null;
     [SerializeField] private UserNameEntry userNameEntry=null;
-    // OLD views
-    [SerializeField] private PremadePriosView premadePrios=null;
-    [SerializeField] private PriosEntryView priosEntry=null;
-    [SerializeField] private PriosFinalRank priosFinalRank=null;
-    [SerializeField] private PriosManualRankView manualRankView=null;
-    [SerializeField] private JugglingGame jugglingGame=null;
-    [SerializeField] private TourneyController tourneyController=null;
     // References
     private SeqChunk currChunk;
     private SeqStep currStep;
@@ -40,7 +31,6 @@ public class GameController : MonoBehaviour {
     private EventManager em { get { return GameManagers.Instance.EventManager; } }
     private UserData ud { get { return dm.UserData; } }
     private SeqChapter[] seqChapters { get { return cm.seqChapters; } }
-    private List<Priority> userPrios { get { return ud.userPrios; } }
 
 
     // ----------------------------------------------------------------
@@ -155,15 +145,8 @@ public class GameController : MonoBehaviour {
         currStep = cm.GetStep(addr);
         
         // Hide/show some things by default.
-        elimigameCont.SetVisible(false);
-        manualRankView.SetVisible(false);
-        //finalRankSample.SetVisible(false);
-        //priosFinalRank.SetVisible(false);
         minigameCont.SetVisible(false);
-        premadePrios.SetVisible(false);
-        priosEntry.SetVisible(false);
         userNameEntry.SetVisible(false);
-        //tourneyController.SetVisible(false);TO DO: Something about this visibility stuff. Maybe have current MainView thing, and only that ONE is visible, all others aren't.
         
         // Set values in components!
         SetNextButtonText(currStep);
@@ -210,42 +193,7 @@ public class GameController : MonoBehaviour {
         switch (funcName) {
             case "ShowUserNameEntry": ShowUserNameEntry(); return false;
             case "ShowRateGamePopup": GameUtils.ShowRateGamePopup(); return true;
-            //case "ShowFinalRankSample": ShowFinalRankSample(); return false;
-            //case "RevealMoreFinalRankSample": RevealMoreFinalRankSample(); return false;
-            //case "HideFinalRankSample": HideFinalRankSample(); return true;
-            //case "OpenMinigames": OpenMinigames(); return false;
-            //case "CloseMinigames": CloseMinigames(); return true;
-            case "OpenPremadePriosChoices0": OpenPremadePriosChoices(0); return false;
-            case "OpenPremadePriosChoices1": OpenPremadePriosChoices(1); return false;
-            case "OpenPriosEntry": OpenPriosEntry(); return false;
-            case "ClosePriosEntry": ClosePriosEntry(); return true;
-            case "OpenPriosFinalRank": OpenPriosFinalRank(); return false;
-            case "RevealPriosFinalRankPrio": RevealPriosFinalRankPrio(); return false;
-            case "ShrinkPriosFinalRank": ShrinkPriosFinalRank(); return true;
-            case "ShowPriosFinalRankAtMiniPos": priosFinalRank.ShowAtMiniPos(); return true;
-            //case "ClosePriosFinalRank": ClosePriosFinalRank(); return true;
-            case "OpenPriosManualRankView": OpenPriosManualRankView(); return false;
-            case "ClosePriosManualRankView": ClosePriosManualRankView(); return true;
-            case "RevealPriosManualRankView": RevealPriosManualRankView(); return false;
-            case "OpenElimigame_Murder": OpenElimigame("Murder"); return false;
-            case "OpenElimigame_PettingZoo": OpenElimigame("PettingZoo"); return false;
-            case "OpenElimigame_SendToSpace": OpenElimigame("SendToSpace"); return false;
-            case "OpenElimigame_TestBasic": OpenElimigame("TestBasic"); return false;
-            case "OpenElimigame_TheBachelor": OpenElimigame("TheBachelor"); return false;
-            case "CloseElimigame": CloseElimigame(); return true;
             case "SetDidCompleteGameTrue": SetDidCompleteGameTrue(); return true;
-            case "Debug_SetTestUserPrios": ud.Debug_AddMinimumTestUserPrios(); return true;
-            case "Debug_SetTestPriosWins": ud.Debug_SetTestPriosWins(); return true;
-            // OLD
-            case "StartJugglingGame": StartJugglingGame(); return false;
-            case "StopJugglingGame": StopJugglingGame(); return true;
-            case "ShowTourneyTimeWatchAnim": ShowTourneyTimeWatchAnim(); return false;
-            case "BeginTourneySequence": BeginTourneySequence(); return true;
-            case "Trny_RevealPrioCandidates": tourneyController.RevealPrioCandidates(); return true;
-            case "Trny_ShowUpcomingBattleBrackets": tourneyController.ShowUpcomingBattleBrackets(); return true;
-            case "Trny_BeginNextBattle": tourneyController.BeginNextBattle(); return false;
-            case "Trny_RevealFinalResults": tourneyController.FinalResults(); return false;
-            case "EndTourneySequence": EndTourneySequence(); return true;
             default: Debug.LogWarning("Oops! No switch case to handle func name: " + funcName); return true;
         }
     }
@@ -258,56 +206,6 @@ public class GameController : MonoBehaviour {
     private void OpenMinigames(RoundData roundData) { minigameCont.Open(roundData); }
     //private void CloseMinigames() { minigameCont.Close(); }
     
-    private void OpenPriosEntry() {
-        charHandler.HideAllChars();
-        priosEntry.Open();
-    }
-    private void ClosePriosEntry() {
-        ud.AddNewPriosFromStrings(priosEntry.GetInputFieldStrings());
-    }
-    
-    private void OpenPremadePriosChoices(int showIndex) {
-        charHandler.HideAllChars();
-        premadePrios.Open(showIndex);
-    }
-    
-    private void OpenPriosFinalRank() { priosFinalRank.Open(); }
-    private void RevealPriosFinalRankPrio() { priosFinalRank.RevealNextPrio(); }
-    private void ShrinkPriosFinalRank() { priosFinalRank.ShrinkToMiniPos(); }
-    
-    private void OpenPriosManualRankView() { manualRankView.Open(); }
-    private void ClosePriosManualRankView() { manualRankView.Close(); }
-    private void RevealPriosManualRankView() {
-        manualRankView.SetVisible(true); // hack! Temp.
-        manualRankView.RevealAnswers();
-    }
-    
-    private void CloseElimigame() {
-        elimigameCont.Close();
-    }
-    private void OpenElimigame(string elimigameName) {
-        elimigameCont.OpenElimigame(elimigameName);
-    }
-    
-    
-    
-    private void StartJugglingGame() {
-        charHandler.HideAllChars();
-        jugglingGame.Restart();
-    }
-    private void StopJugglingGame() {
-        jugglingGame.Close();
-    }
-    
-    private void BeginTourneySequence() {
-        tourneyController.Begin();
-    }
-    private void EndTourneySequence() {
-        tourneyController.End();
-    }
-    
-    
-    private void ShowTourneyTimeWatchAnim() { randoAnims.Play("TourneyTimeWatch"); }
     
     public void OnClick_Quit() {
         SceneHelper.OpenScene(SceneNames.MainMenu);

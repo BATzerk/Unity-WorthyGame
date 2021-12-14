@@ -6,7 +6,6 @@ public class RoundData {
     // Properties
     public int RoundIndex { get; private set; }
     public string[] minigameNames { get; private set; } // in order.
-    public PrioRank prioRank { get; private set; }
     public int CurrMinigameIndex;
     
     // Getters (Public)
@@ -16,9 +15,8 @@ public class RoundData {
     public string CurrMinigameName() { return minigameNames[CurrMinigameIndex]; }
     
     // Initialize
-    public RoundData(int RoundIndex, PrioRank rank, string[] minigameNames) {
+    public RoundData(int RoundIndex, string[] minigameNames) {
         this.RoundIndex = RoundIndex;
-        this.prioRank = rank;
         this.minigameNames = minigameNames;
         CurrMinigameIndex = 0;
     }
