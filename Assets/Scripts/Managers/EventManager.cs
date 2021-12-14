@@ -18,7 +18,6 @@ public class EventManager {
     // Gameplay
     public delegate void SeqAddressAction (SeqAddress addr);
     public event NoParamAction CharFinishedRevealingSpeechTextEvent;
-    public event NoParamAction SortedUserPriosEvent;
     public event SeqAddressAction SetCurrSeqAddrEvent;
     
     public void OnCharFinishedRevealingSpeechText() { CharFinishedRevealingSpeechTextEvent?.Invoke(); }

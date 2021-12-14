@@ -7,24 +7,46 @@ using TMPro;
 namespace MinigameNamespace {
     abstract public class Minigame : BaseViewElement {
         // Enums
-        protected enum States { Undefined, Prepped, Begun, SetOutcome, Complete }
-        //// Abstracts
-        //public abstract MinigameType MyType { get; }
-        //public abstract string Title { get; }
-        // Components
-        public ContestantView[] ContViews { get; private set; } // defined in Initialize.
+        //protected enum States { Undefined, Prepped, Begun, SetOutcome, Complete }
         // Properties
         [SerializeField] public string Title;
+        // References
+        protected MinigameController minigameCont { get; private set; }
+
+
+
+        // ----------------------------------------------------------------
+        //  Initialize
+        // ----------------------------------------------------------------
+        public void Initialize(MinigameController mc) {
+            //CurrState = States.Undefined;
+            minigameCont = mc;
+            SetVisible(false); // hide 'em all by default.
+        }
+
+
+
+        // ----------------------------------------------------------------
+        //  Doers
+        // ----------------------------------------------------------------
+        virtual public void Hide() {
+            SetVisible(false);
+        }
+        protected void ShowNextButton(string btnText = "NEXT") {
+            minigameCont.b_minigameNext.GetComponentInChildren<TextMeshProUGUI>().text = btnText;
+            minigameCont.b_minigameNext.gameObject.SetActive(true);
+        }
+        protected void HideNextButton() { minigameCont.b_minigameNext.gameObject.SetActive(false); }
+        //private void SetTimerBarVisible(bool val) { minigameCont.commonTimerBar.SetVisible(val); }
+
+
+
+        /*
         [SerializeField] private float TimeToChoose = -1; // if -1, we're untimed.
         [SerializeField] public bool DoShowTimerBar=false; // if TRUE, AND I'm timed, we'll show the commonTimerBar.
         //public bool IsComplete { get; private set; } // TRUE when we call OnMinigameComplete.
-        //public bool DidSetOutcome { get; private set; } // TRUE when we set some outcome.
         protected States CurrState;
-        // References
-        protected MinigameController minigameCont { get; private set; }
-        protected List<Contestant> contestants;
-        public List<Contestant> Winners { get; private set; }
-        public List<Contestant> Losers { get; private set; }
+        //public bool DidSetOutcome { get; private set; } // TRUE when we set some outcome.
         
         // Getters (Public)
         public bool DidSetOutcome { get { return CurrState >= States.SetOutcome; } }
@@ -65,38 +87,6 @@ namespace MinigameNamespace {
         }
 
 
-
-        // ----------------------------------------------------------------
-        //  Initialize
-        // ----------------------------------------------------------------
-        public void Initialize(MinigameController mc) {
-            CurrState = States.Undefined;
-            minigameCont = mc;
-            SetVisible(false); // hide 'em all by default.
-            ContViews = GetComponentsInChildren<ContestantView>();
-            foreach (ContestantView cv in ContViews) { cv.SetMyMinigame(this); }
-        }
-        
-        
-        
-        // ----------------------------------------------------------------
-        //  Doers
-        // ----------------------------------------------------------------
-        virtual public void Hide() {
-            SetVisible(false);
-        }
-        protected void SetContViewsVisible(bool val) {
-            foreach (ContestantView cv in ContViews) { cv.SetVisible(val); }
-        }
-        protected void SetContViewsInteractable(bool val) {
-            foreach (ContestantView cv in ContViews) { cv.SetInteractable(val); }
-        }
-        protected void ShowNextButton(string btnText="NEXT") {
-            minigameCont.b_minigameNext.GetComponentInChildren<TextMeshProUGUI>().text = btnText;
-            minigameCont.b_minigameNext.gameObject.SetActive(true);
-        }
-        protected void HideNextButton() { minigameCont.b_minigameNext.gameObject.SetActive(false); }
-        private void SetTimerBarVisible(bool val) { minigameCont.commonTimerBar.SetVisible(val); }
         
         
         
@@ -251,8 +241,9 @@ namespace MinigameNamespace {
                 SetOutcome(contestants[Random.Range(0, contestants.Count)]);
             }
         }
-        
-        
-        
+        */
+
+
+
     }
 }

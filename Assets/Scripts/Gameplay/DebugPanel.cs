@@ -29,11 +29,9 @@ public class DebugPanel : BaseViewElement {
         
         //Open();
         Close();
-        SetIsPriosListOpen(false);
         
         // Add event listeners!
         em.SetCurrSeqAddrEvent += OnSetCurrSeqAddr;
-        em.SortedUserPriosEvent += OnSortedUserPrios;
     }
     //private void Start() {
         //rt_gameplay.offsetMax = new Vector2(rt_gameplay.offsetMax.x, Screen.safeArea.yMin);// TEST!
@@ -41,7 +39,6 @@ public class DebugPanel : BaseViewElement {
     private void OnDestroy() {
         // Remove event listeners!
         em.SetCurrSeqAddrEvent -= OnSetCurrSeqAddr;
-        em.SortedUserPriosEvent -= OnSortedUserPrios;
     }
     
     
@@ -54,21 +51,17 @@ public class DebugPanel : BaseViewElement {
         numTapsUntilOpen = 0;
         isOpen = true;
         myCG.alpha = 1;
-        //myCG.blocksRaycasts = true;
+        myCG.blocksRaycasts = true;
         LeanTween.cancel(this.gameObject);
         LeanTween.value(this.gameObject, SetBottomUIOpenLoc, bottomUIOpenLoc,1, 0.4f).setEaseOutBack();
-        // Default open PriosList too.
-        SetIsPriosListOpen(true);
     }
     private void Close() {
         numTapsUntilOpen = 0;
         isOpen = false;
         //myCG.alpha = 0;
-        //myCG.blocksRaycasts = false;
+        myCG.blocksRaycasts = false;
         LeanTween.cancel(this.gameObject);
         LeanTween.value(this.gameObject, SetBottomUIOpenLoc, bottomUIOpenLoc,0, 0.5f).setEaseOutQuart();
-        // Default close PriosList too.
-        SetIsPriosListOpen(false);
     }
     
     
@@ -86,15 +79,11 @@ public class DebugPanel : BaseViewElement {
     private void OnSetCurrSeqAddr(SeqAddress addr) {
         t_seqAddr.text = addr.ToString();
     }
-    private void OnSortedUserPrios() {
-        UpdatePriosListText();
-    }
     // ----------------------------------------------------------------
     //  UI Events
     // ----------------------------------------------------------------
     public void OnClick_Close() { Close(); }
     public void OnClick_MainMenu() { SceneHelper.OpenScene(SceneNames.MainMenu); }
-    public void OnClick_TogPriosList() { TogglePriosListOpen(); }
     
     public void OnClick_PrevChunk() { gameController.Debug_SetSeqPrevChunk(); }
     public void OnClick_PrevStep() { gameController.Debug_PrevGeneralStep(); }
@@ -103,47 +92,6 @@ public class DebugPanel : BaseViewElement {
     
     
     
-    // ----------------------------------------------------------------
-    //  PriosList
-    // ----------------------------------------------------------------
-    // Components
-    [SerializeField] private Image i_priosListScrim=null;
-    [SerializeField] private RectTransform rt_priosList=null;
-    [SerializeField] private TextMeshProUGUI t_priosList=null;
-    // Properties
-    private bool isPriosListOpen=false;
-    // Events
-    public void OnClick_Scrim() { SetIsPriosListOpen(false); }
-    // Doers
-    private void TogglePriosListOpen() {
-        SetIsPriosListOpen(!isPriosListOpen);
-    }
-    private void SetIsPriosListOpen(bool val) {
-        isPriosListOpen = val;
-        // Hide/show visuals
-        rt_priosList.gameObject.SetActive(isPriosListOpen);
-        i_priosListScrim.gameObject.SetActive(isPriosListOpen);
-        //gameController.GameTimeCont.SetIsDebugPriosListOpen(isPriosListOpen);
-        if (isPriosListOpen) {
-            UpdatePriosListText();
-        }
-    }
-    private void UpdatePriosListText() {
-        // Update text!
-        string str = "";
-        //dm.OrderUserPriosByBattle();
-        //for (int i=userPrios.Count-1; i>=0; --i) {
-        for (int i=0; i<userPrios.Count; i++) {
-            Priority p = userPrios[i];
-            str += (i+1) + ".  " + p.text;
-            str += "   <color=#FFFFFF66>won</color> "+p.NumBattlesWon+", <color=#FFFFFF66>lost</color> "+p.NumBattlesLost;
-            if (p.NumBattlesTied > 0) { str += " <color=#FFFFFF66>tied</color> "+p.NumBattlesTied; }
-            str += "</color>\n";
-        }
-        t_priosList.text = str;
-    }
-
-
 
     // ----------------------------------------------------------------
     //  Update

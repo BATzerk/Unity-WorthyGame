@@ -36,8 +36,7 @@ public class CharViewHandler : MonoBehaviour {
         // Find the CharView who's speaking, based on "Abc: " prefix.
         CharView cv=null;
         if (line.StartsWith("N: ", ivc)) { cv = charsList[0]; } // Narrator!
-        else if (line.StartsWith("Astro: ", ivc)) { cv = charsList[1]; } // Astronaut!
-        else if (line.StartsWith("PetZooHost: ", ivc)) { cv = charsList[2]; } // Petting-zoo host!
+        //else if (line.StartsWith("PetZooHost: ", ivc)) { cv = charsList[2]; } // Petting-zoo host!
         else if (line.StartsWith("User: ", ivc)) { cv = charsList[3]; } // User!
         // Remove the char name prefix.
         if (cv == null) { // Safety check.

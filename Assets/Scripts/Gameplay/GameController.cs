@@ -153,15 +153,15 @@ public class GameController : MonoBehaviour {
         charHandler.OnSetCurrStep(currStep);
         mainStory.OnSetCurrAddr(currStep.mainStoryKnot);
         
-        // Maybe start minigames!
-        if (currStep.mgRoundData != null) {
-            OpenMinigames(currStep.mgRoundData);
-        }
+        //// Maybe start minigames!
+        //if (currStep.mgRoundData != null) {
+        //    OpenMinigames(currStep.mgRoundData);
+        //}
         
         // Maybe call function!
         bool mayAutoAdvance = 
             CallSeqFuncByName(currStep.funcToCallName);
-        if (currStep.mgRoundData != null) { mayAutoAdvance = false; } // getting hacky here.
+        //if (currStep.mgRoundData != null) { mayAutoAdvance = false; } // getting hacky here.
         if (isDebugStepping) { mayAutoAdvance = false; } // Debug stepping suspends auto-advancing feature.
         
         // We're ok to auto-advance?
@@ -203,7 +203,7 @@ public class GameController : MonoBehaviour {
     private void ShowUserNameEntry() { userNameEntry.Show(); }
     private void SetDidCompleteGameTrue() { ud.DidCompleteGame = true; }
     
-    private void OpenMinigames(RoundData roundData) { minigameCont.Open(roundData); }
+    //private void OpenMinigames(RoundData roundData) { minigameCont.Open(roundData); }
     //private void CloseMinigames() { minigameCont.Close(); }
     
     
@@ -221,16 +221,13 @@ public class GameController : MonoBehaviour {
     //  Debug
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private bool isDebugStepping;
-    public void Debug_PrevGeneralStep() { // Either affects MinigameController or my seq stuff.
-        if (minigameCont.IsVisible) {
-            if (minigameCont.CurrRoundData.CurrMinigameIndex<=0) { Debug_SetSeqPrevStep(); } // FIRST minigame? Go to prev seq-step, then.
-            else { minigameCont.Debug_StartPrevMinigame(); } // Otherwise, prev minigame!
-        }
-        else { Debug_SetSeqPrevStep(); }
+    public void Debug_PrevGeneralStep() {
+        Debug_SetSeqPrevStep();
     }
-    public void Debug_NextGeneralStep() { // Either affects MinigameController or my seq stuff.
-        if (minigameCont.IsVisible) { minigameCont.Debug_SkipCurrMinigame(); }
-        else { Debug_SetSeqNextStep(); }
+    public void Debug_NextGeneralStep() {
+        //if (minigameCont.IsVisible) { minigameCont.Debug_SkipCurrMinigame(); }
+        //else
+        Debug_SetSeqNextStep();
     }
     
     

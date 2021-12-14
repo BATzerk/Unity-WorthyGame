@@ -14,16 +14,16 @@ public class AnalyticsManager {
     
     
     
-    public void OnBeginMinigameRound(int currRoundIndex) {
+    public void OnBeginMinigame(int currRoundIndex) {
         Dictionary<string, object> dict = DefaultDict();
         dict.Add("RoundIndex", currRoundIndex);
         CustomEvent("BeginMinigameRound", dict);
     }
-    public void OnCompleteMinigameRound(int currRoundIndex) {
-        Dictionary<string, object> dict = DefaultDict();
-        dict.Add("RoundIndex", currRoundIndex);
-        CustomEvent("CompleteMinigameRound", dict);
-    }
+    //public void OnCompleteMinigameRound(int currRoundIndex) {
+    //    Dictionary<string, object> dict = DefaultDict();
+    //    dict.Add("RoundIndex", currRoundIndex);
+    //    CustomEvent("CompleteMinigameRound", dict);
+    //}
     
     private void CustomEvent(string eventName, Dictionary<string,object> eventData) {
         //Analytics.CustomEvent(eventName, eventData);

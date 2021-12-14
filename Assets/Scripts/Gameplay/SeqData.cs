@@ -33,7 +33,6 @@ public class SeqStep {
     //public int index;// { get; private set; } // index in the content array.
     public SeqAddress MyAddr;
     public Chars myChar { get; private set; }
-    public RoundData mgRoundData { get; private set; }
     public string speechText { get; private set; }
     public string nextBtnText { get; private set; }
     public string charImgName { get; private set; }
@@ -57,14 +56,6 @@ public class SeqStep {
         mainStoryKnot = val;
         return this;
     }
-    public SeqStep SetMinigameRound(int roundIndex, params string[] mgNames) {
-        mgRoundData = new RoundData(roundIndex, mgNames);
-        return this;
-    }
-    //public SeqStep SetMinigameRound(RoundData roundData) {//PrioRank rank, params string[] mgNames) {
-    //    mgRoundData = roundData;
-    //    return this;
-    //}
     
     // Initialize!
     public SeqStep() {

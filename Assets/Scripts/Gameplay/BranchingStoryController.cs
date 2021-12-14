@@ -13,7 +13,6 @@ public class BranchingStoryController : BaseViewElement {
     [SerializeField] private Animator choiceBtnsAnimator=null;
     [SerializeField] private GameController gameController=null;
     [SerializeField] private ChoiceButton[] choiceBtns=null;
-    //[SerializeField] private GameObject go_choiceBtns=null;
     [SerializeField] private GridLayoutGroup choiceBtnLayoutGroup=null;
     [SerializeField] private TextMeshProUGUI t_tapToContinue=null;
     // Properties
@@ -157,9 +156,7 @@ public class BranchingStoryController : BaseViewElement {
                     }
                     
                     if (line.StartsWith("HideCharViews", ivc)) { charViewHandler.HideAllChars(); }
-                    else if (line.StartsWith("ShowFinalRankSample", ivc)) { ShowFinalRankSample(); }
-                    else if (line.StartsWith("RevealMoreFinalRankSample", ivc)) { RevealMoreFinalRankSample(); }
-                    else if (line.StartsWith("HideFinalRankSample", ivc)) { HideFinalRankSample(); }
+                    //else if (line.StartsWith("ShowFinalRankSample", ivc)) { ShowFinalRankSample(); }
                     else { currStorySource.DoFuncFromStory(line); }
                     //if (doHalt) {
                     
@@ -228,36 +225,6 @@ public class BranchingStoryController : BaseViewElement {
         }
     }
     
-    
-    private void ShowFinalRankSample() {
-        gameController.finalRankSample.Show();
-        //// Manually delay showing NEXT button.
-        //gameController.ManuallyShowNextButton("NEXT", 3f);TODO: Clarify up this. Do it?
-    }
-    private void RevealMoreFinalRankSample() { gameController.finalRankSample.RevealMore(); }
-    private void HideFinalRankSample() { gameController.finalRankSample.Hide(); }
-    
-    
-    //private void AssignTopPrioTitle() {
-    //    string topPrioTitle = currStory.variablesState["topPrioTitle"].ToString();
-    //    dm.SetTopPrioTitle(topPrioTitle);
-    //}
-    
-    
-    //private void SetChoiceBtnNumCols(int numCols) {
-    //    choiceBtnLayoutGroup.constraintCount = numCols;
-    //    switch (numCols) {
-    //        case 1:
-    //            choiceBtnLayoutGroup.cellSize = new Vector2(480, 80);
-    //            break;
-    //        case 2:
-    //            choiceBtnLayoutGroup.cellSize = new Vector2(260, 220);
-    //            break;
-    //        default:
-    //            Debug.LogError("Whoa, SetChoiceBtnLayoutNumCols doesn't have a handle for this many cols: " + numCols);
-    //            break;
-    //    }
-    //}
     
         
     // ----------------------------------------------------------------

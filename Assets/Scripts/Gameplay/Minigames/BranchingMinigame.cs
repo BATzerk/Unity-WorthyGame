@@ -7,6 +7,7 @@ using TMPro;
 
 namespace MinigameNamespace {
     public class BranchingMinigame : Minigame {
+        /*
         //// Overrides
         //override public int NumContestants() { return 1; }
         // Components
@@ -131,5 +132,6 @@ namespace MinigameNamespace {
         }
         
         
+        */
     }
 }

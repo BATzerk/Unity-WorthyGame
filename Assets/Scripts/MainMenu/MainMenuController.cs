@@ -30,18 +30,6 @@ public class MainMenuController : BaseViewElement {
         GameUtils.ShowRateGamePopup();
     }
     
-    public void OnClick_SetPremadePrios_Animals() {
-        dm.LoadUserData(PrioListType.Animals);
-        SceneHelper.OpenScene(SceneNames.Gameplay);
-    }
-    public void OnClick_SetPremadePrios_Life() {
-        dm.LoadUserData(PrioListType.Life);
-        SceneHelper.OpenScene(SceneNames.Gameplay);
-    }
-    public void OnClick_SetPremadePrios_Partner() {
-        dm.LoadUserData(PrioListType.Partner);
-        SceneHelper.OpenScene(SceneNames.Gameplay);
-    }
     
     
 }
