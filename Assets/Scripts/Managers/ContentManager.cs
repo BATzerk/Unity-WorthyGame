@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/** Kind of a ha-cky class to handle all text content. */
+/**
+ * Kind of a ha-cky class to handle all text content.
+ * Any content/text that's not in Inky can be hardcoded in me, below.
+ */
 public class ContentManager {
     
     // Getters (Public)
@@ -109,11 +112,9 @@ public class ContentManager {
                 new SeqStep().SetFunc("ShowUserNameEntry"),
                 new SeqStep().SetDialogueTree("GameIntro"),
             }),
-            // PremadePriosChoices!
+            // Minigame Test #1
             new SeqChunk(new SeqStep[]{
-                new SeqStep(Chars.Narrator, "Now.\n\nPlease pick TEN things that matter to you.", "Zorro_Side0").SetBtn("NEXT"),
-                new SeqStep().SetFunc("OpenPremadePriosChoices0"),
-                new SeqStep(Chars.Narrator, "Great!\n\nLet the minigames begin!").SetBtn("NEXT"),
+                new SeqStep().SetFunc("OpenMinigame_JokeTeller"),
             }),
             
             /*

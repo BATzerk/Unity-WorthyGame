@@ -9,7 +9,7 @@ using System.Linq;
 
 public class MinigameController : BaseViewElement {
     // Components
-    [SerializeField] private Button b_endMinigame=null;
+    //[SerializeField] private Button b_endMinigame=null;
     [SerializeField] public  Button b_minigameNext=null; // the NEXT button that's shared across Minigames!
     // Properties
     private Dictionary<string, Minigame> allMinigames; // GameObject name, Minigame.
@@ -25,8 +25,8 @@ public class MinigameController : BaseViewElement {
     // ----------------------------------------------------------------
     //  Initialize
     // ----------------------------------------------------------------
-    private void InitializeMinigames() {
-        // Make allMinigames list
+    private void Start() {
+        // Make allMinigames list.
         Minigame[] allMinigamesArray = GetComponentsInChildren<Minigame>(true);
         allMinigames = new Dictionary<string, Minigame>();
         foreach (Minigame m in allMinigamesArray) {
@@ -54,10 +54,9 @@ public class MinigameController : BaseViewElement {
     //  Start / End Minigames
     // ----------------------------------------------------------------
     public void StartMinigame(string _name) {
+        SetVisible(true);
         //// Set round values.
         //CurrMinigameIndex = _mgIndex;//roundDatas[CurrRoundIndex];
-        //// Analytics!
-        //GameManagers.Instance.AnalyticsManager.OnBeginMinigame(CurrMinigameIndex);
         // Safety check.
         if (!allMinigames.ContainsKey(_name)) { Debug.LogError("Minigame with name doesn't exist in scene: " + _name); return; }
         
@@ -65,6 +64,7 @@ public class MinigameController : BaseViewElement {
         HideAllMinigames();
         // Set currMinigame!
         currMinigame = allMinigames[_name];
+        currMinigame.Open();
         //// Show titleCurtain! It waits for a tap to begin the minigame.
         //titleCurtain.Appear(currMinigame, contestants);
     }
@@ -77,20 +77,20 @@ public class MinigameController : BaseViewElement {
     }
     
     private void HideAllMinigames() {
-        b_endMinigame.gameObject.SetActive(false); // hide DONE for now.
+        //b_endMinigame.gameObject.SetActive(false); // hide DONE for now.
         foreach (Minigame m in allMinigames.Values) { m.Hide(); }
     }
 
 
-    
+
     // ----------------------------------------------------------------
     //  Button Events / Doers
     // ----------------------------------------------------------------
-    //public void OnClick_MinigameNext() {
-    //    currMinigame.OnClick_Next();
-    //}
+    public void OnClick_MinigameNext() {
+        currMinigame.OnClick_Next();
+    }
     public void ShowEndMinigameButton() {
-        b_endMinigame.gameObject.SetActive(true);
+        //b_endMinigame.gameObject.SetActive(true);
     }
     
     

@@ -21,6 +21,18 @@ public class BranchingStoryController : BaseViewElement {
     // References
     [SerializeField] private CharViewHandler charViewHandler=null;
     private IStorySource currStorySource; // the CURRENT storySource! Swapped out and stuff.
+
+
+    //// TEST
+    //private List<string> jsonStoryStateSnapshots=new List<string>();
+    //public void Debug_RewindStoryOneStep() {
+    //    if (jsonStoryStateSnapshots.Count == 0) { return; } // No more to rewind? Do nothing.
+    //    string jsonStr = jsonStoryStateSnapshots[jsonStoryStateSnapshots.Count - 1];
+    //    currStory.state.LoadJson(jsonStr);
+    //}
+
+
+
     
     // Getters (Private)
     private Story currStory { get { return currStorySource?.MyStory; } }
@@ -128,6 +140,9 @@ public class BranchingStoryController : BaseViewElement {
             bool doAdvanceAgainAfterLine = false; // hacky? Confusing?
             
             while (true) {
+                //// Save snapshot before advancing.
+                //jsonStoryStateSnapshots.Add(currStory.state.ToJson());
+                // Advance!
                 string line = currStory.Continue();
                 if (string.IsNullOrWhiteSpace(line) && !currStory.canContinue) { OnStoryComplete(); return; }
                 else if (line.StartsWith("AutoAdvanceAfterSpeech", ivc)) {

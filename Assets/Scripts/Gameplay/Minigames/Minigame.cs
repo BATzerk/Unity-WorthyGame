@@ -29,6 +29,9 @@ namespace MinigameNamespace {
         // ----------------------------------------------------------------
         //  Doers
         // ----------------------------------------------------------------
+        virtual public void Open() {
+            SetVisible(true);
+        }
         virtual public void Hide() {
             SetVisible(false);
         }
@@ -38,6 +41,15 @@ namespace MinigameNamespace {
         }
         protected void HideNextButton() { minigameCont.b_minigameNext.gameObject.SetActive(false); }
         //private void SetTimerBarVisible(bool val) { minigameCont.commonTimerBar.SetVisible(val); }
+
+
+
+
+
+        // ----------------------------------------------------------------
+        //  Events
+        // ----------------------------------------------------------------
+        virtual public void OnClick_Next() { }
 
 
 
@@ -217,7 +229,6 @@ namespace MinigameNamespace {
         // ----------------------------------------------------------------
         //  Events
         // ----------------------------------------------------------------
-        virtual public void OnClick_Next() { }
         virtual public void OnClick_ContButton(ContestantButton contButton) { }
         virtual public void OnBeginDrag_ContDraggable(ContestantDraggable cont) { }
         virtual public void OnEndDrag_ContDraggable(ContestantDraggable cont) { }

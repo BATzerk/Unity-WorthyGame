@@ -70,6 +70,7 @@ public class GameController : MonoBehaviour {
         // SHIFT + DELETE = Erase save data
         if (InputController.IsKey_shift && Input.GetKeyDown(KeyCode.Delete)) {
             dm.ClearAllSaveData();
+            SceneHelper.ReloadScene();
             return;
         }
         // CONTROL + R = Reload scene
@@ -90,7 +91,7 @@ public class GameController : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.RightBracket) && InputController.IsKey_shift) { Debug_SetSeqNextChunk(); return; }
         else if (Input.GetKeyDown(KeyCode.LeftBracket)) { Debug_PrevGeneralStep(); return; }
         else if (Input.GetKeyDown(KeyCode.RightBracket)) { Debug_NextGeneralStep(); return; }
-	}
+    }
 
 
 
@@ -192,6 +193,7 @@ public class GameController : MonoBehaviour {
         if (funcName == null) { return true; } // Ignore null names.
         switch (funcName) {
             case "ShowUserNameEntry": ShowUserNameEntry(); return false;
+            case "OpenMinigame_JokeTeller": OpenMinigame_JokeTeller(); return false;
             case "ShowRateGamePopup": GameUtils.ShowRateGamePopup(); return true;
             case "SetDidCompleteGameTrue": SetDidCompleteGameTrue(); return true;
             default: Debug.LogWarning("Oops! No switch case to handle func name: " + funcName); return true;
@@ -202,11 +204,12 @@ public class GameController : MonoBehaviour {
     
     private void ShowUserNameEntry() { userNameEntry.Show(); }
     private void SetDidCompleteGameTrue() { ud.DidCompleteGame = true; }
-    
-    //private void OpenMinigames(RoundData roundData) { minigameCont.Open(roundData); }
-    //private void CloseMinigames() { minigameCont.Close(); }
-    
-    
+    private void OpenMinigame_JokeTeller() {
+        minigameCont.StartMinigame("JokeTeller");
+    }
+
+
+
     public void OnClick_Quit() {
         SceneHelper.OpenScene(SceneNames.MainMenu);
     }
@@ -222,6 +225,8 @@ public class GameController : MonoBehaviour {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private bool isDebugStepping;
     public void Debug_PrevGeneralStep() {
+        //storyCont.Debug_RewindStoryOneStep();
+        //charHandler.Debug_RevealAllCharTexts();
         Debug_SetSeqPrevStep();
     }
     public void Debug_NextGeneralStep() {
