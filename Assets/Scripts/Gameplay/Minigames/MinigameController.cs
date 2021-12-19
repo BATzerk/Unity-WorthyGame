@@ -11,6 +11,7 @@ public class MinigameController : BaseViewElement {
     // Components
     //[SerializeField] private Button b_endMinigame=null;
     [SerializeField] public  Button b_minigameNext=null; // the NEXT button that's shared across Minigames!
+    [SerializeField] private Animator anim_321go;
     // Properties
     private Dictionary<string, Minigame> allMinigames; // GameObject name, Minigame.
     public int CurrMinigameIndex { get; private set; }
@@ -92,7 +93,9 @@ public class MinigameController : BaseViewElement {
     public void ShowEndMinigameButton() {
         //b_endMinigame.gameObject.SetActive(true);
     }
-    
+    public void PlayAnim_321Go() {
+        anim_321go.Play("321Go");
+    }
     
 
 

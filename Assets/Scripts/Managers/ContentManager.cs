@@ -112,9 +112,11 @@ public class ContentManager {
                 new SeqStep().SetFunc("ShowUserNameEntry"),
                 new SeqStep().SetDialogueTree("GameIntro"),
             }),
-            // Minigame Test #1
+            // Joke Teller
             new SeqChunk(new SeqStep[]{
                 new SeqStep().SetFunc("OpenMinigame_JokeTeller"),
+                new SeqStep().SetDialogueTree("PostJokeTeller"),
+                new SeqStep().SetFunc("OpenMinigame_PickUpFromAirport"),
             }),
             
             /*

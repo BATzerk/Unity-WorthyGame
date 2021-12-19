@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class JokeTextFx : MonoBehaviour {
     // Components
     [SerializeField] private CanvasGroup myCG;
     [SerializeField] private RectTransform myRT;
+    [SerializeField] private TextMeshProUGUI t_myText;
 
 
 
     public void Initialize(RectTransform parentTF) {
         GameUtils.ParentAndReset(this.gameObject, parentTF);
 
+
+        t_myText.color = new ColorHSB(Random.Range(0,1f), 0.8f, 0.9f).ToColor();
 
         Vector2 pos = new Vector2(Random.Range(-120, 120), Random.Range(-120, 120));
         float rot = Random.Range(-10, 10);

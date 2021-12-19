@@ -23,7 +23,7 @@ VAR wcE = "</color>" // worthyColorEnd
     -- N: You're so hot right now!
 
 - N: You’re actually the first person to play my minigames here.\\n\\nI’m excited to see how this goes!
-- N: Here is your {wcS}worthiness meter{wcE}!
+- N: Here is your {wcS}WorthyMeter{wcE}!
 - FuncContinue_ShowWorthyMeter
 - ShowTapToContinue(1.2)
 - N: Try to get this to 100%.
@@ -33,11 +33,25 @@ VAR wcE = "</color>" // worthyColorEnd
 * [No, I have to pee first.]
     -- N: Okay! Let’s both take a quick bathroom break, then. Tap next when you’re back from the bathroom.
 
-
-    
 --> END
 
 
+=== PostJokeTeller ===
+- N: Ha ha! Those were some funny jokes!
+- N: But it doesn't look as if telling jokes changed your deservingness of good friendships.
+- N: Maybe the WorthyMeter is broken? Can we check?
+- N: Try saying something dumb to bring down your worthiness a little bit.
+* [i'm a astronot]
+* [I need a vacation... from MY VACATION!!!]
+* [soup's up! no wait I mean surf's up oh no]
+* [bimgo bamgo bonjo gingoo]
+* [I need to put my hands in your pockets. It's an emergency.]
+- N: Hmm.
+- N: I mean, that was a really dumb thing to say.
+- N: ...But apparently you're still 100% worthy of good friendships.
+- N: ...
+- N: I have an idea! Go pick a friend up from the airport!\\nThat'll DEFINITELY make you more worthy.
+- -> END
 
 
 

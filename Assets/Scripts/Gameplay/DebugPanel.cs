@@ -27,8 +27,8 @@ public class DebugPanel : BaseViewElement {
     override protected void Awake() {
         base.Awake();
         
-        Open();
-        //Close();
+        //Open();
+        Close();
         
         // Add event listeners!
         em.SetCurrSeqAddrEvent += OnSetCurrSeqAddr;

@@ -27,6 +27,7 @@ namespace MinigameNamespace {
             t_header.text = "Tell as many jokes as possible to get people to like you.";
             isTimerActive = false;
             b_tellJoke.gameObject.SetActive(false);
+            t_timeLeft.gameObject.SetActive(false);
 
             ShowNextButton("READY");
         }
@@ -39,7 +40,10 @@ namespace MinigameNamespace {
             HideNextButton();
             t_header.text = "Tell jokes!";
             b_tellJoke.gameObject.SetActive(true);
+            t_timeLeft.gameObject.SetActive(true);
             isTimerActive = true;
+
+            minigameCont.PlayAnim_321Go();
         }
         public void OnButtonClick_TellJoke() {
             numJokesTold++;

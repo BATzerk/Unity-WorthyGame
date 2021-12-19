@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] private MainStory mainStory=null;
     [SerializeField] private BranchingStoryController storyCont=null;
     [SerializeField] private TextMeshProUGUI t_nextButton=null;
+    [SerializeField] private WorthyMeter worthyMeter = null;
     // Main Views
     [SerializeField] private MinigameController minigameCont=null;
     [SerializeField] private UserNameEntry userNameEntry=null;
@@ -193,16 +194,18 @@ public class GameController : MonoBehaviour {
         if (funcName == null) { return true; } // Ignore null names.
         switch (funcName) {
             case "ShowUserNameEntry": ShowUserNameEntry(); return false;
+            case "ShowWorthyMeter": ShowWorthyMeter(); return false;
             case "OpenMinigame_JokeTeller": OpenMinigame_JokeTeller(); return false;
             case "ShowRateGamePopup": GameUtils.ShowRateGamePopup(); return true;
             case "SetDidCompleteGameTrue": SetDidCompleteGameTrue(); return true;
             default: Debug.LogWarning("Oops! No switch case to handle func name: " + funcName); return true;
         }
     }
-    
-    
-    
+
+
+
     private void ShowUserNameEntry() { userNameEntry.Show(); }
+    private void ShowWorthyMeter() { worthyMeter.Show(); }
     private void SetDidCompleteGameTrue() { ud.DidCompleteGame = true; }
     private void OpenMinigame_JokeTeller() {
         minigameCont.StartMinigame("JokeTeller");
