@@ -109,12 +109,13 @@ public class ContentManager {
             //}),
             // GameIntro
             new SeqChunk(new SeqStep[]{
-                new SeqStep().SetFunc("ShowUserNameEntry"),
+                //new SeqStep().SetFunc("ShowUserNameEntry"),
                 new SeqStep().SetDialogueTree("GameIntro"),
             }),
             // Joke Teller
             new SeqChunk(new SeqStep[]{
-                new SeqStep().SetFunc("OpenMinigame_JokeTeller"),
+                //new SeqStep().SetDialogueTree("PreJokeTeller"),
+                new SeqStep().SetFunc("OpenMinigame_RunARace"),
                 new SeqStep().SetDialogueTree("PostJokeTeller"),
                 new SeqStep().SetFunc("OpenMinigame_PickUpFromAirport"),
             }),

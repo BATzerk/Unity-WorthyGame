@@ -5,17 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 
 namespace MinigameNamespace {
-    public class Minigame_JokeTeller : Minigame {
+    public class Minigame_RunARace : Minigame {
         // Components
-        [SerializeField] private Button b_tellJoke;
         [SerializeField] private TextMeshProUGUI t_header;
-        [SerializeField] private TextMeshProUGUI t_timeLeft;
         // Properties
         private bool isTimerActive;
-        private int numJokesTold = 0;
-        private float timeLeft = 12;
-        // References
-        [SerializeField] private GameObject prefab_JokeTextFx;
+        private float timeLeft = 30;
 
 
 
@@ -24,10 +19,8 @@ namespace MinigameNamespace {
         // ----------------------------------------------------------------
         override public void Open() {
             base.Open();
-            t_header.text = "Tell as many jokes as possible to get people to like you.";
+            t_header.text = "Get to the finish line within 60 seconds to become worthy of winning.";
             isTimerActive = false;
-            b_tellJoke.gameObject.SetActive(false);
-            t_timeLeft.gameObject.SetActive(false);
 
             ShowNextButton("READY");
         }
@@ -38,28 +31,18 @@ namespace MinigameNamespace {
         // ----------------------------------------------------------------
         override public void OnClick_Next() {
             HideNextButton();
+            t_header.text = "";
 
             minigameCont.PlayAnim_321Go();
         }
-        public void OnButtonClick_TellJoke() {
-            numJokesTold++;
-            // Add a joke text.
-            JokeTextFx obj = Instantiate(prefab_JokeTextFx).GetComponent<JokeTextFx>();
-            obj.Initialize(this.myRT);
-        }
-
         override public void OnCountdownComplete() {
-            t_header.text = "Tell jokes!";
-            b_tellJoke.gameObject.SetActive(true);
-            t_timeLeft.gameObject.SetActive(true);
             isTimerActive = true;
         }
 
         private void OnOutOfTime() {
             timeLeft = 0;
             isTimerActive = false;
-            b_tellJoke.gameObject.SetActive(false);
-            t_header.text = "You told " + numJokesTold + " jokes.\n\nEveryone is in stitches!";
+            //t_header.text = "Race complete";
         }
 
 
@@ -71,7 +54,6 @@ namespace MinigameNamespace {
         private void Update() {
             if (isTimerActive) {
                 timeLeft -= Time.deltaTime;
-                t_timeLeft.text = TextUtils.ToTimeString_ms(timeLeft);
                 if (timeLeft <= 0) {
                     OnOutOfTime();
                 }

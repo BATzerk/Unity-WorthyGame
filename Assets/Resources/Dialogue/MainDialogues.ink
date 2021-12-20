@@ -1,39 +1,74 @@
 
 // VAR BrattTaylor = "<color=\#6B513B>Bratt Taylor</color>"
-VAR wcS = "<color=\#6B513B>" // worthyColorStart
+VAR wcS = "<color=\#BB57D0>" // worthyColorStart
 VAR wcE = "</color>" // worthyColorEnd
 
 - -> GameIntro
 
 
 === GameIntro ===
-- N: Hi, [UserName]! My name is Waddlesworth Worthington.
-- N: But you can call me Jill.
-* [Hi, Jill.]
-- N: Hi!\\n\\nI designed this little game to make you {wcS}MORE WORTHY{wcE}!
-- N: We could all use a little more {wcS}worthiness{wcE}, you know?
-* [Makes sense.]
-* [Whatever, <i>Jill</i>.]
-    -- N: That's my name, [UserName]!
-- N: Each MINIGAME is designed to make you {wcS}MORE WORTHY{wcE}.
-* [Worthy... of what?]
-    -- N: Love, belonging, friendship, nice things.\\nAnd more!
-    -- N: It’s gonna be sweet.
-* [I’m ready.]
-    -- N: You're so hot right now!
+// - N: Hi, [UserName]! My name is Waddlesworth Worthington.
+// - N: But you can call me Jill.
+// * [Hi, Jill.]
+// - N: I've made a bunch of MINIGAMES to make you {wcS}MORE WORTHY{wcE}!
+// - N: What's something you want to be {wcS}worthy{wcE} of?
+// * [Belonging]
+// * [Acknowledgement]
+// * [Forgiveness]
+// * [Broomsticks]
+// - N: You might not be worthy of it now, but you should be by the end of this game.
 
-- N: You’re actually the first person to play my minigames here.\\n\\nI’m excited to see how this goes!
+// - N: You’re actually the first person to play my minigames here.\\n\\nI’m excited to see how this goes!
 - N: Here is your {wcS}WorthyMeter{wcE}!
 - FuncContinue_ShowWorthyMeter
 - ShowTapToContinue(1.2)
-- N: Try to get this to 100%.
-- N: Your goal is to become {wcS}100% worthy{wcE}.
+- N: Your goal is to become {wcS}100% WORTHY{wcE}!
 - N: Are you ready?
-* [Yes.]
+* [Yes]
+* [You betcha]
+- -> END
+
+
+/*
 * [No, I have to pee first.]
-    -- N: Okay! Let’s both take a quick bathroom break, then. Tap next when you’re back from the bathroom.
+    -- N: Then let’s both take a quick bathroom break.\\n\\nLet me know when you're back!
+    ** [I'm back.]
+        --- ->BackFromBathroom
+    ** [I'm not back yet.]
+        --- N: Okay. Take your time in there!
+        *** [Keep stalling.]
+            ---- N: Okay, let's go ahead and start with you still in the bathroom.
+            ---- -> END
+        *** [Okay, ready.]
+            ---- ->StillNotReadyLoop
+
+= StillNotReadyLoop
+- N: Okay. Just let me know when you're ready.
++ [I'm back.]
+    -- -> BackFromBathroom
++ [I'm still not ready.]
+    -- ->StillNotReadyLoop
+
+
+= BackFromBathroom
+- N: Did you wash your hands?
+* [Of course.]
+    -- N: Empty bladder. Clean hands.\\n\\nLet's go!
+    -- -> END
+* [I don't remember.]
+    -- N: You wanna go back and wash your hands?
+    ** [No. I didn't actually go to the bathroom.]
+        --- N: What were you doing, then?
+        *** [Literally nothing.]
+        *** [None of your beeswax, Jill.]
+            ---- N: I see.\\n\\nWell... let's get started!
+    ** [Yeah. Gimme one sec.]
+        --- ->StillNotReadyLoop
+
 
 --> END
+*/
+
 
 
 === PostJokeTeller ===

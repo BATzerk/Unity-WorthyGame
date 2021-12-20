@@ -50,8 +50,8 @@ public class GameController : MonoBehaviour {
     // ----------------------------------------------------------------
     private void Start () {
         // Start sequence!
-        SetCurrAddr(ud.CurrSeqAddr);
-        //SetCurrAddr(new SeqAddress(1,0,1));//TEMP not starting at beginning
+        //SetCurrAddr(ud.CurrSeqAddr);
+        SetCurrAddr(new SeqAddress(0, 0,0));//TEMP hardcoded start here
     }
 
 
@@ -192,24 +192,27 @@ public class GameController : MonoBehaviour {
     // #cando: Actually pass func reference instead of a string.
     private bool CallSeqFuncByName(string funcName) {
         if (funcName == null) { return true; } // Ignore null names.
-        switch (funcName) {
-            case "ShowUserNameEntry": ShowUserNameEntry(); return false;
-            case "ShowWorthyMeter": ShowWorthyMeter(); return false;
-            case "OpenMinigame_JokeTeller": OpenMinigame_JokeTeller(); return false;
-            case "ShowRateGamePopup": GameUtils.ShowRateGamePopup(); return true;
-            case "SetDidCompleteGameTrue": SetDidCompleteGameTrue(); return true;
-            default: Debug.LogWarning("Oops! No switch case to handle func name: " + funcName); return true;
+        if (funcName.StartsWith("OpenMinigame_")) {
+            string mgName = funcName.Substring(13);
+            Debug.Log(mgName);//QQQ
+            minigameCont.StartMinigame(mgName);
+            return false;
+        }
+        else {
+            switch (funcName) {
+                case "ShowUserNameEntry": ShowUserNameEntry(); return false;
+                case "ShowRateGamePopup": GameUtils.ShowRateGamePopup(); return true;
+                case "SetDidCompleteGameTrue": SetDidCompleteGameTrue(); return true;
+                default: Debug.LogWarning("Oops! No switch case to handle func name: " + funcName); return true;
+            }
         }
     }
 
 
-
     private void ShowUserNameEntry() { userNameEntry.Show(); }
-    private void ShowWorthyMeter() { worthyMeter.Show(); }
+    public void HideWorthyMeter() { worthyMeter.Hide(); }
+    public void ShowWorthyMeter() { worthyMeter.AnimateIn(); }
     private void SetDidCompleteGameTrue() { ud.DidCompleteGame = true; }
-    private void OpenMinigame_JokeTeller() {
-        minigameCont.StartMinigame("JokeTeller");
-    }
 
 
 

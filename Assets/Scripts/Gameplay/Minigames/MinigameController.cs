@@ -12,6 +12,7 @@ public class MinigameController : BaseViewElement {
     //[SerializeField] private Button b_endMinigame=null;
     [SerializeField] public  Button b_minigameNext=null; // the NEXT button that's shared across Minigames!
     [SerializeField] private Animator anim_321go;
+    [SerializeField] private WorthyMeter worthyMeter;
     // Properties
     private Dictionary<string, Minigame> allMinigames; // GameObject name, Minigame.
     public int CurrMinigameIndex { get; private set; }
@@ -66,8 +67,9 @@ public class MinigameController : BaseViewElement {
         // Set currMinigame!
         currMinigame = allMinigames[_name];
         currMinigame.Open();
-        //// Show titleCurtain! It waits for a tap to begin the minigame.
-        //titleCurtain.Appear(currMinigame, contestants);
+        // Show empty WorthyMeter.
+        worthyMeter.Show();
+        worthyMeter.SetPercentFull(0);
     }
     public void EndCurrMinigame() {
         HideAllMinigames();
@@ -96,7 +98,13 @@ public class MinigameController : BaseViewElement {
     public void PlayAnim_321Go() {
         anim_321go.Play("321Go");
     }
-    
+    public void OnCountdownComplete() {
+        // Tell Minigame.
+        currMinigame.OnCountdownComplete();
+        // Animate WorthyMeter to full.
+        worthyMeter.AnimateToPercentFull(1f, 0.5f);
+    }
+
 
 
     // ----------------------------------------------------------------

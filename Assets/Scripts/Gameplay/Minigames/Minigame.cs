@@ -50,7 +50,8 @@ namespace MinigameNamespace {
         //  Events
         // ----------------------------------------------------------------
         virtual public void OnClick_Next() { }
-
+        virtual public void OnCountdownComplete() { }
+        
 
 
         /*

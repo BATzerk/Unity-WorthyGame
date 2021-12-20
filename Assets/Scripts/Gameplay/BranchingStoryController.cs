@@ -169,9 +169,9 @@ public class BranchingStoryController : BaseViewElement {
                     else { // Safety check.
                         Debug.LogError("Func string not valid: \"" + line + "\"");
                     }
-                    
                     if (line.StartsWith("HideCharViews", ivc)) { charViewHandler.HideAllChars(); }
-                    //else if (line.StartsWith("ShowFinalRankSample", ivc)) { ShowFinalRankSample(); }
+                    else if (line.StartsWith("HideWorthyMeter", ivc)) { gameController.HideWorthyMeter(); }
+                    else if (line.StartsWith("ShowWorthyMeter", ivc)) { gameController.ShowWorthyMeter(); }
                     else { currStorySource.DoFuncFromStory(line); }
                     //if (doHalt) {
                     
