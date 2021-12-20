@@ -19,7 +19,7 @@ namespace MinigameNamespace {
         // ----------------------------------------------------------------
         override public void Open() {
             base.Open();
-            t_header.text = "Get to the finish line within 60 seconds to become worthy of winning.";
+            t_header.enabled = true;
             isTimerActive = false;
 
             ShowNextButton("READY");
@@ -31,7 +31,7 @@ namespace MinigameNamespace {
         // ----------------------------------------------------------------
         override public void OnClick_Next() {
             HideNextButton();
-            t_header.text = "";
+            t_header.enabled = false;
 
             minigameCont.PlayAnim_321Go();
         }

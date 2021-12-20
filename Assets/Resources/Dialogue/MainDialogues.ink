@@ -23,9 +23,11 @@ VAR wcE = "</color>" // worthyColorEnd
 - FuncContinue_ShowWorthyMeter
 - ShowTapToContinue(1.2)
 - N: Your goal is to become {wcS}100% WORTHY{wcE}!
-- N: Are you ready?
-* [Yes]
-* [You betcha]
+- N: What do you want to become {wcS}worthy{wcE} of?
+* [Praise]
+    -- StartMinigame_Praise
+* [Self-love]
+    -- StartMinigame_SelfLove
 - -> END
 
 

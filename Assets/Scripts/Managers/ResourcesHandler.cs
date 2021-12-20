@@ -8,16 +8,9 @@ public class ResourcesHandler : MonoBehaviour {
     [SerializeField] public GameObject ImageLine;
     [SerializeField] public GameObject ImageLinesJoint;
     
-    [Header ("PrioritiesGame")]
-    [SerializeField] public Material m_Additive;
-    [SerializeField] public GameObject UFOShootDown_Missile;
-    
-    [SerializeField] public GameObject JugglingGame_Ball;
-    [SerializeField] public GameObject PremadePrioToggle;
-    //[SerializeField] public GameObject PriosFinalRankRowView;
-    [SerializeField] public GameObject PriosManualRankRowBacking;
-    [SerializeField] public GameObject PriosManualRankRowViewAuto;
-    [SerializeField] public GameObject PriosManualRankRowViewManual;
+    //[Header ("WorthyGame")]
+    //[SerializeField] public Material m_Additive;
+    //[SerializeField] public GameObject UFOShootDown_Missile;
     
     
     

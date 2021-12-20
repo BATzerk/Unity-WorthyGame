@@ -194,7 +194,6 @@ public class GameController : MonoBehaviour {
         if (funcName == null) { return true; } // Ignore null names.
         if (funcName.StartsWith("OpenMinigame_")) {
             string mgName = funcName.Substring(13);
-            Debug.Log(mgName);//QQQ
             minigameCont.StartMinigame(mgName);
             return false;
         }

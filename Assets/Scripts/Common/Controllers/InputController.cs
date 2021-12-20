@@ -15,6 +15,16 @@ public class InputController : MonoBehaviour {
     public bool IsDoubleClick { get { return isDoubleClick; } }
     public Vector2 MousePosWorld { get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); } }
     //public Vector3 MousePosScreen { get { return (Input.mousePosition - new Vector3(Screen.width,Screen.height,0)*0.5f) / ScreenHandler.ScreenScale; } }
+    public Vector2 MousePosCanvas {
+        get {
+            float scale = MainCanvas.Scaler.referenceResolution.x / Screen.width;
+            return new Vector2(
+                (Input.mousePosition.x-Screen.width*0.5f)  * scale,
+                (Input.mousePosition.y-Screen.height*0.5f) * scale);
+                //Input.mousePosition.x * MainCanvas.Scaler.referenceResolution.x / Screen.width,
+                //Input.mousePosition.y * MainCanvas.Scaler.referenceResolution.y / Screen.height);
+        }
+    }
 
     static public bool IsTouchHold() { return Input.GetMouseButton(0); }
     static public bool IsTouchDown() { return Input.GetMouseButtonDown(0); }
@@ -55,12 +65,6 @@ public class InputController : MonoBehaviour {
     static public bool IsKeyUp_shift { get { return Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift); } }
     static public bool IsKeyDown_shift { get { return Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift); } }
     
-    public Vector2 MousePosCanvas { get {
-        return new Vector2(
-            Input.mousePosition.x * MainCanvas.Scaler.referenceResolution.x/Screen.width,
-            Input.mousePosition.y * MainCanvas.Scaler.referenceResolution.y/Screen.height);
-        }
-    }
 
 
     // ----------------------------------------------------------------
