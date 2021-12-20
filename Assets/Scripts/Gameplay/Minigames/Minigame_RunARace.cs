@@ -6,6 +6,7 @@ using TMPro;
 
 namespace MinigameNamespace {
     public class Minigame_RunARace : Minigame {
+        public override string MyWorthyNoun { get { return "Winning-Worthy"; } }
         // Components
         [SerializeField] private TextMeshProUGUI t_header;
         // Properties

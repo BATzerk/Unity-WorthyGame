@@ -10,9 +10,10 @@ using System.Linq;
 public class MinigameController : BaseViewElement {
     // Components
     //[SerializeField] private Button b_endMinigame=null;
-    [SerializeField] public  Button b_minigameNext=null; // the NEXT button that's shared across Minigames!
+    [SerializeField] public Button b_minigameNext=null; // the NEXT button that's shared across Minigames!
+    [SerializeField] public ConfettiBursts confettiBursts;
+    [SerializeField] public WorthyMeter worthyMeter;
     [SerializeField] private Animator anim_321go;
-    [SerializeField] private WorthyMeter worthyMeter;
     // Properties
     private Dictionary<string, Minigame> allMinigames; // GameObject name, Minigame.
     public int CurrMinigameIndex { get; private set; }
@@ -20,6 +21,7 @@ public class MinigameController : BaseViewElement {
     [SerializeField] private GameController gameController=null;
     [SerializeField] private UnityEngine.Analytics.AnalyticsEventTracker analyticsTracker = null;
     private Minigame currMinigame;
+
 
 
     
@@ -67,9 +69,8 @@ public class MinigameController : BaseViewElement {
         // Set currMinigame!
         currMinigame = allMinigames[_name];
         currMinigame.Open();
-        // Show empty WorthyMeter.
-        worthyMeter.Show();
-        worthyMeter.SetPercentFull(0);
+        // Update WorthyMeter.
+        worthyMeter.SetWorthyNoun(currMinigame.MyWorthyNoun);
     }
     public void EndCurrMinigame() {
         HideAllMinigames();

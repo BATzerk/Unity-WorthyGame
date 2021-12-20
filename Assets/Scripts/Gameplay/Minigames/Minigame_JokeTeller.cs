@@ -6,6 +6,7 @@ using TMPro;
 
 namespace MinigameNamespace {
     public class Minigame_JokeTeller : Minigame {
+        public override string MyWorthyNoun { get { return "Friendship-Worthy"; } }
         // Components
         [SerializeField] private Button b_tellJoke;
         [SerializeField] private TextMeshProUGUI t_header;

@@ -106,8 +106,8 @@ public class DebugPanel : BaseViewElement {
     }
     
     private void OnMouseDown() {
-        Vector2 mousePos = InputController.Instance.MousePosCanvas;
-        if (mousePos.x<120 && mousePos.y<120) {
+        Vector2 mousePos = InputController.Instance.MousePosCanvasBottomLeft;
+        if (mousePos.x<45 && mousePos.y<45) {
             if (++numTapsUntilOpen >= NumTapsToOpen) { ToggleIsOpen(); }
         }
         else { numTapsUntilOpen = 0; }

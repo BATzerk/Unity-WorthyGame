@@ -13,6 +13,9 @@ namespace MinigameNamespace {
         // References
         protected MinigameController minigameCont { get; private set; }
 
+        // Getters
+        protected WorthyMeter worthyMeter { get { return minigameCont.worthyMeter; } }
+        public abstract string MyWorthyNoun { get; }
 
 
         // ----------------------------------------------------------------

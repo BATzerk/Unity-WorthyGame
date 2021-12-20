@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 namespace MinigameNamespace {
-    public class BranchingMinigame : Minigame {
+    //public class BranchingMinigame : Minigame {
         /*
         //// Overrides
         //override public int NumContestants() { return 1; }
@@ -133,5 +133,5 @@ namespace MinigameNamespace {
         
         
         */
-    }
+    //}
 }

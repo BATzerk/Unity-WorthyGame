@@ -6,6 +6,7 @@ public class ResourcesHandler : MonoBehaviour {
     // References!
     [Header ("Common")]
     [SerializeField] public GameObject ImageLine;
+    [SerializeField] public GameObject ImageLines;
     [SerializeField] public GameObject ImageLinesJoint;
     
     //[Header ("WorthyGame")]

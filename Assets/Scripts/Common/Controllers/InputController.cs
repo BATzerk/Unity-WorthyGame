@@ -15,14 +15,19 @@ public class InputController : MonoBehaviour {
     public bool IsDoubleClick { get { return isDoubleClick; } }
     public Vector2 MousePosWorld { get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); } }
     //public Vector3 MousePosScreen { get { return (Input.mousePosition - new Vector3(Screen.width,Screen.height,0)*0.5f) / ScreenHandler.ScreenScale; } }
-    public Vector2 MousePosCanvas {
+    public Vector2 MousePosCanvasCentered {
         get {
             float scale = MainCanvas.Scaler.referenceResolution.x / Screen.width;
             return new Vector2(
                 (Input.mousePosition.x-Screen.width*0.5f)  * scale,
                 (Input.mousePosition.y-Screen.height*0.5f) * scale);
-                //Input.mousePosition.x * MainCanvas.Scaler.referenceResolution.x / Screen.width,
-                //Input.mousePosition.y * MainCanvas.Scaler.referenceResolution.y / Screen.height);
+        }
+    }
+    public Vector2 MousePosCanvasBottomLeft {
+        get {
+            return new Vector2(
+                Input.mousePosition.x * MainCanvas.Scaler.referenceResolution.x / Screen.width,
+                Input.mousePosition.y * MainCanvas.Scaler.referenceResolution.y / Screen.height);
         }
     }
 
