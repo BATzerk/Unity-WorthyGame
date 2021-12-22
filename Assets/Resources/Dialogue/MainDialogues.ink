@@ -1,12 +1,84 @@
 
-// VAR BrattTaylor = "<color=\#6B513B>Bratt Taylor</color>"
 VAR wcS = "<color=\#BB57D0>" // worthyColorStart
 VAR wcE = "</color>" // worthyColorEnd
+VAR worthy = "<color=\#BB57D0>worthy</color>"
+VAR Worthy = "<color=\#BB57D0>Worthy</color>"
+VAR Jill = "<color=\#d9b212>Jill</color>"
 
 - -> GameIntro
 
 
 === GameIntro ===
+- FuncContinue_SetBackgroundImage:YellowOrange
+- N: Hi, [UserName]! I'm Waddlesworth Worthington III.
+- N: But you can call me {Jill}.
+* [Hi, {Jill}.]
+- N: This is not a video game.\\n\\nIt's a reminder:
+// * [A reminder of what?]
+- N: You.\\n\\nAre.\\n\\n{Worthy}.
+* [Mmm... Idk, {Jill}.]
+    -- N: Well, how worthy do you feel?
+    ** [Less than somewhat.]
+    ** [Somewhat.]
+    ** [More than somewhat.]
+    -- N: Ok, then follow up question:
+* [Worthy of what?]
+    -- N: You're {worthy} of TONS of exciting stuff!\\n\\nThat's what this game is all about!
+- N: Do you sometimes feel not good enough?
+* [Never.]
+    -- N: You always feel good enough?
+    ** [I do!]
+        --- N: Beautiful!\\n\\nThen this should be a pretty cozy experience.
+    ** [More or less.]
+        --- N: Beautiful!\\n\\nThen this should be a pretty cozy experience.
+    ** [I have no idea what I'm doing.]
+        --- N: Neither do I!\\n\\nThat's exciting!
+* [Of course.]
+    -- N: That's totally normal!\\n\\nAnd also divorced from reality.
+    -- N: Consider this game a splash in the face with a cool, refreshing bucket of reality.
+    ** [Splash!!]
+        --- N: 'At's the spirit, [UserName]!
+    ** [Splash...]
+        --- N: I do love your honesty.\\n\\nKeep that up!
+* [What are you getting at, {Jill}?]
+    -- N: I'm getting at <i>your essence</i>.\\nYour innate, sweet, <u>immutable</u> value.
+    ** [Oh, boy...]
+    ** [Oh, boy!]
+    ** [Oh. Boy.]
+    -- N: That's the spirit, [UserName]!
+- ->WorthyMeterIntro
+
+
+
+= WorthyMeterIntro
+- N: No matter WHAT you do, you'll ALWAYS be {worthy}.
+- FuncContinue_SetBackgroundImage:PaintStudio
+- N: You're gonna paint some masterpieces!
+- N: Try to make them as good as possible, and see how it affects your {wcS}PRAISEWORTHINESS{wcE}.
+- FuncContinue_ShowWorthyMeter
+- ShowTapToContinue(1.2)
+- ->END
+
+
+=== PostPainter ===
+- N: Look at these beautiful paintings!
+- -> END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // - N: Hi, [UserName]! My name is Waddlesworth Worthington.
 // - N: But you can call me Jill.
 // * [Hi, Jill.]
@@ -20,8 +92,6 @@ VAR wcE = "</color>" // worthyColorEnd
 
 // - N: You’re actually the first person to play my minigames here.\\n\\nI’m excited to see how this goes!
 - N: Here is your {wcS}WorthyMeter{wcE}!
-- FuncContinue_ShowWorthyMeter
-- ShowTapToContinue(1.2)
 - N: Your goal is to become {wcS}100% WORTHY{wcE}!
 - N: What do you want to become {wcS}worthy{wcE} of?
 * [Praise]

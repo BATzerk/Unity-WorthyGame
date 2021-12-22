@@ -110,8 +110,8 @@ public class ContentManager {
             // GameIntro
             new SeqChunk(new SeqStep[]{
                 //new SeqStep().SetFunc("ShowUserNameEntry"),
-                new SeqStep().SetFunc("OpenMinigame_Painter"),//QQQ
                 new SeqStep().SetDialogueTree("GameIntro"),
+                new SeqStep().SetFunc("OpenMinigame_Painter"),
             }),
             // Joke Teller
             new SeqChunk(new SeqStep[]{

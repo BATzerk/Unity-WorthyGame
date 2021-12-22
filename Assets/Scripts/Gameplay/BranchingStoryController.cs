@@ -172,11 +172,9 @@ public class BranchingStoryController : BaseViewElement {
                     if (line.StartsWith("HideCharViews", ivc)) { charViewHandler.HideAllChars(); }
                     else if (line.StartsWith("HideWorthyMeter", ivc)) { gameController.HideWorthyMeter(); }
                     else if (line.StartsWith("ShowWorthyMeter", ivc)) { gameController.ShowWorthyMeter(); }
+                    else if (line.StartsWith("SetBackgroundImage", ivc)) { gameController.SetBackgroundImage(line.Substring(19).TrimEnd()); }
                     else { currStorySource.DoFuncFromStory(line); }
-                    //if (doHalt) {
-                    
                     break;
-                    //}
                 }
                 else {
                     // Clear everyone's speech by default.
@@ -234,8 +232,8 @@ public class BranchingStoryController : BaseViewElement {
             }
             else {//if (numChoices % 
                 //choiceBtnLayoutGroup.cellSize = new Vector2(480, 80);
-                choiceBtnLayoutGroup.constraintCount = 2;
-                choiceBtnLayoutGroup.cellSize = new Vector2(240, 80);
+                choiceBtnLayoutGroup.constraintCount = 1;
+                choiceBtnLayoutGroup.cellSize = new Vector2(480, 80);
             }
         }
     }

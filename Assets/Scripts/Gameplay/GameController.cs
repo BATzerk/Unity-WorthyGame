@@ -7,12 +7,12 @@ using TMPro;
 
 public class GameController : MonoBehaviour {
     // Components
-    [SerializeField] private Animator randoAnims=null;
     [SerializeField] private CharViewHandler charHandler=null;
-    [SerializeField] private GameObject go_nextButton=null;
     [SerializeField] private GameTimeController gameTimeCont=null;
     [SerializeField] private MainStory mainStory=null;
     [SerializeField] private BranchingStoryController storyCont=null;
+    [SerializeField] private GameObject go_nextButton=null;
+    [SerializeField] private Image i_background = null;
     [SerializeField] private TextMeshProUGUI t_nextButton=null;
     [SerializeField] private WorthyMeter worthyMeter = null;
     // Main Views
@@ -212,6 +212,12 @@ public class GameController : MonoBehaviour {
     public void HideWorthyMeter() { worthyMeter.Hide(); }
     public void ShowWorthyMeter() { worthyMeter.AnimateIn(); }
     private void SetDidCompleteGameTrue() { ud.DidCompleteGame = true; }
+    public void SetBackgroundImage(string imgName) {
+        string path = "Images/Backgrounds/" + imgName;
+        Sprite sprite = Resources.Load<Sprite>(path);
+        if (sprite == null) { Debug.LogError("Background sprite not found in Resources folder: \"" + path + "\""); }
+        i_background.sprite = sprite;
+    }
 
 
 
