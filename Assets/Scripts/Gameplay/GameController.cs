@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
     private SeqStep currStep;
 
     // Getters (Public)
+    //public CharViewHandler CharHandler { get { return charHandler; } }
     public GameTimeController GameTimeCont { get { return gameTimeCont; } }
     public MinigameController MinigameCont { get { return minigameCont; } }
     public BranchingStoryController StoryCont { get { return storyCont; } }
@@ -194,7 +195,7 @@ public class GameController : MonoBehaviour {
         if (funcName == null) { return true; } // Ignore null names.
         if (funcName.StartsWith("OpenMinigame_")) {
             string mgName = funcName.Substring(13);
-            minigameCont.StartMinigame(mgName);
+            minigameCont.OpenMinigame(mgName);
             return false;
         }
         else {
@@ -218,7 +219,8 @@ public class GameController : MonoBehaviour {
         if (sprite == null) { Debug.LogError("Background sprite not found in Resources folder: \"" + path + "\""); }
         i_background.sprite = sprite;
     }
-
+    public void SetWorthyMeterNoun(string noun) { worthyMeter.SetWorthyNoun(noun); }
+    public void SetWorthyMeterPercentFull(float amount) { worthyMeter.SetPercentFull(amount); }
 
 
     public void OnClick_Quit() {

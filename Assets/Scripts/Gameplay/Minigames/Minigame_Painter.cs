@@ -7,14 +7,12 @@ using TMPro;
 namespace MinigameNamespace {
     public class Minigame_Painter : Minigame {
         // Components
-        [SerializeField] private TextMeshProUGUI t_header;
+        [SerializeField] private Animator myAnimator;
+        [SerializeField] private GameObject go_ui;
         [SerializeField] private Button b_undo;
         [SerializeField] private Button b_submitPainting;
-        [SerializeField] private RectTransform rt_canvasPaint; // where the paint is applied.
+        [SerializeField] private RectTransform rt_room; // so we know the scale of the room, to offset the brush pos.
         [SerializeField] private RectTransform[] rt_masterpieces; // includes the frame and canvas cloth.
-        [SerializeField] private RectTransform[] rt_masterpieceThumbnailPoses; // where we tween them each to.
-        //private LineRenderer currBrushLine;
-        //private List<LineRenderer> brushLines=new List<LineRenderer>();
         private ImageLines currBrushLine;
         private List<ImageLines> brushLines = new List<ImageLines>();
         // Properties
@@ -22,9 +20,9 @@ namespace MinigameNamespace {
         private bool mayPaint;
         private Vector2 brushPosPrev;
         private int currMasterpieceIndex;
-        private const int NumMasterpiecesRequired = 3;
         private Color brushColor = new Color(0.1f, 0.1f, 0.1f);
         private float brushThickness = 4;
+        private const float BrushSegmentMinLength = 2; // when the mouse moves this far, we add a new line segment.
         // References
         [SerializeField] private LineRenderer prefab_brushLine;
         private RectTransform currMasterpieceRT;
@@ -33,10 +31,13 @@ namespace MinigameNamespace {
         // Getters
         public override string MyWorthyNoun { get { return "Praiseworthy"; } }
         private Vector2 GetBrushPos() {
-            return InputController.Instance.MousePosCanvasCentered + new Vector2(0, 60); // HARDCODED offset.
+            Vector2 pos = InputController.Instance.MousePosCanvasCentered;
+            pos /= rt_room.localScale.x; // scale it correctly.
+            pos += new Vector2(0, 10); // HARDCODED offset.
+            return pos;
         }
         private bool IsMouseOverCanvasArea() {
-            return rt_canvasPaint.rect.Contains(GetBrushPos());
+            return currMasterpieceRT.rect.Contains(GetBrushPos());
         }
 
 
@@ -46,12 +47,10 @@ namespace MinigameNamespace {
         // ----------------------------------------------------------------
         override public void Open() {
             base.Open();
-            t_header.enabled = true;
             isBrushDown = false;
-            worthyMeter.Show();
-            worthyMeter.SetPercentFull(1);
-            mayPaint = true;
+            mayPaint = false;
             SetCurrMasterpieceIndex(0);
+            go_ui.SetActive(false);
         }
 
 
@@ -61,8 +60,6 @@ namespace MinigameNamespace {
         private void SetCurrMasterpieceIndex(int index) {
             currMasterpieceIndex = index;
             currMasterpieceRT = rt_masterpieces[currMasterpieceIndex];
-            int numLeft = NumMasterpiecesRequired - currMasterpieceIndex;
-            t_header.text = "Paint " + numLeft + " masterpiece" + (numLeft==1?"":"s") + ".";
             UpdateButtonsInteractable();
         }
 
@@ -92,16 +89,21 @@ namespace MinigameNamespace {
             b_submitPainting.interactable = brushLines.Count > 0;
         }
 
+        public void PauseAnimatior() {
+            myAnimator.enabled = false;
+        }
+        private void UnpauseAnimator() {
+            myAnimator.enabled = true;
+        }
+
 
 
         // ----------------------------------------------------------------
         //  Events
         // ----------------------------------------------------------------
         override public void OnClick_Next() {
-            HideNextButton();
-            t_header.enabled = false;
-
-            minigameCont.PlayAnim_321Go();
+            //HideNextButton();
+            gameController.AdvanceSeqStep();
         }
         public void OnClick_Undo() {
             if (brushLines.Count > 0) {
@@ -115,32 +117,52 @@ namespace MinigameNamespace {
             StartCoroutine(Coroutine_SubmitPainting());
         }
         private IEnumerator Coroutine_SubmitPainting() {
-            // Reset the brush strokes list!
-            brushLines = new List<ImageLines>();
-            // Do confetti burst, bro!
-            minigameCont.confettiBursts.PlayBurst(MyWorthyNoun.ToUpper());
+            // Reset some values, and play the confetti burst.
+            brushLines = new List<ImageLines>(); // reset the brushLines list once a painting's been locked in.
+            go_ui.SetActive(false);
             mayPaint = false;
-            UpdateButtonsInteractable();
-            yield return new WaitForSeconds(2f);
+            minigameCont.confettiBursts.PlayBurst("+0%", MyWorthyNoun.ToUpper());
+            yield return new WaitForSeconds(4f);
 
-            mayPaint = true;
-
-            // Animate it up to the top area.
-            Vector2 pos = rt_masterpieceThumbnailPoses[currMasterpieceIndex].position;
-            LeanTween.move(currMasterpieceRT.gameObject, pos, 1f).setEaseInOutQuad();
-            LeanTween.scale(currMasterpieceRT.gameObject, Vector3.one * 0.1f, 1f).setEaseInOutQuad();
-
-            // Allow starting the next masterpiece!
-            if (currMasterpieceIndex < NumMasterpiecesRequired-1) {
-                SetCurrMasterpieceIndex(currMasterpieceIndex + 1);
-            }
-            else {
-                t_header.text = "All masterpieces completed!";
-                b_undo.gameObject.SetActive(false);
-                b_submitPainting.gameObject.SetActive(false);
-            }
+            //StepForward();
+            gameController.StoryCont.AdvanceStory();
         }
 
+
+
+        // ----------------------------------------------------------------
+        //  Steps
+        // ----------------------------------------------------------------
+        override protected void SetCurrStep(int _currStep) {
+            base.SetCurrStep(_currStep);
+            switch (CurrStep) {
+                // Zoom out to show the room.
+                case 1:
+                    UnpauseAnimator();
+                    break;
+                // Zoom in and allow painting #1!
+                case 2:
+                    mayPaint = true;
+                    go_ui.SetActive(true);
+                    UnpauseAnimator();
+                    break;
+                // Zoom out from Painting #1.
+                case 3:
+                    UnpauseAnimator();
+                    break;
+                // Zoom in and allow painting #2!
+                case 4:
+                    SetCurrMasterpieceIndex(currMasterpieceIndex + 1);
+                    mayPaint = true;
+                    go_ui.SetActive(true);
+                    UnpauseAnimator();
+                    break;
+                // Zoom out from Painting #2.
+                case 5:
+                    UnpauseAnimator();
+                    break;
+            }
+        }
 
 
         // ----------------------------------------------------------------
@@ -161,7 +183,7 @@ namespace MinigameNamespace {
 
             if (isBrushDown) {
                 Vector2 brushPos = GetBrushPos();
-                if (Vector2.Distance(brushPosPrev, brushPos) > 5f) {
+                if (Vector2.Distance(brushPosPrev, brushPos) > BrushSegmentMinLength) {
                     ContinueBrushStroke(GetBrushPos());
                     brushPosPrev = GetBrushPos();
                 }
@@ -178,6 +200,11 @@ namespace MinigameNamespace {
 
 
 
+
+//// Animate it up to the top area.
+//Vector2 pos = rt_masterpieceThumbnailPoses[currMasterpieceIndex].position;
+//LeanTween.move(currMasterpieceRT.gameObject, pos, 1f).setEaseInOutQuad();
+//LeanTween.scale(currMasterpieceRT.gameObject, Vector3.one * 0.1f, 1f).setEaseInOutQuad();
 
 //private void AddBrushStroke(Vector2 posALocal, Vector2 posBLocal) {
 //    ImageLine newObj = Instantiate(ResourcesHandler.Instance.ImageLine).GetComponent<ImageLine>();

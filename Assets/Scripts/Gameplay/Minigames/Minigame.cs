@@ -6,14 +6,14 @@ using TMPro;
 
 namespace MinigameNamespace {
     abstract public class Minigame : BaseViewElement {
-        // Enums
-        //protected enum States { Undefined, Prepped, Begun, SetOutcome, Complete }
         // Properties
-        [SerializeField] public string Title;
+        private int currStep; // minigames can have their own sequence of steps, simply defined by integers.
         // References
+        protected GameController gameController { get; private set; }
         protected MinigameController minigameCont { get; private set; }
 
         // Getters
+        protected int CurrStep { get { return currStep; } }
         protected WorthyMeter worthyMeter { get { return minigameCont.worthyMeter; } }
         public abstract string MyWorthyNoun { get; }
 
@@ -21,8 +21,10 @@ namespace MinigameNamespace {
         // ----------------------------------------------------------------
         //  Initialize
         // ----------------------------------------------------------------
-        public void Initialize(MinigameController mc) {
+        public void Initialize(GameController gc, MinigameController mc) {
             //CurrState = States.Undefined;
+            currStep = 0;
+            gameController = gc;
             minigameCont = mc;
             SetVisible(false); // hide 'em all by default.
         }
@@ -44,6 +46,12 @@ namespace MinigameNamespace {
         }
         protected void HideNextButton() { minigameCont.b_minigameNext.gameObject.SetActive(false); }
         //private void SetTimerBarVisible(bool val) { minigameCont.commonTimerBar.SetVisible(val); }
+        public void StepForward() {
+            SetCurrStep(currStep + 1);
+        }
+        virtual protected void SetCurrStep(int _val) {
+            currStep = _val;
+        }
 
 
 

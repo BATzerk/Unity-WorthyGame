@@ -1,6 +1,8 @@
 
 VAR wcS = "<color=\#BB57D0>" // worthyColorStart
 VAR wcE = "</color>" // worthyColorEnd
+VAR worth = "<color=\#BB57D0>worth</color>"
+VAR Worth = "<color=\#BB57D0>Worth</color>"
 VAR worthy = "<color=\#BB57D0>worthy</color>"
 VAR Worthy = "<color=\#BB57D0>Worthy</color>"
 VAR Jill = "<color=\#d9b212>Jill</color>"
@@ -9,6 +11,7 @@ VAR Jill = "<color=\#d9b212>Jill</color>"
 
 
 === GameIntro ===
+/*QQQ
 - FuncContinue_SetBackgroundImage:YellowOrange
 - N: Hi, [UserName]! I'm Waddlesworth Worthington III.
 - N: But you can call me {Jill}.
@@ -46,22 +49,50 @@ VAR Jill = "<color=\#d9b212>Jill</color>"
     ** [Oh, boy!]
     ** [Oh. Boy.]
     -- N: That's the spirit, [UserName]!
-- ->WorthyMeterIntro
+*/
 
 
-
-= WorthyMeterIntro
 - N: No matter WHAT you do, you'll ALWAYS be {worthy}.
-- FuncContinue_SetBackgroundImage:PaintStudio
-- N: You're gonna paint some masterpieces!
+- FuncContinue_OpenMinigame_Painter
+- FuncContinue_HideCharViewBody_N
+- N: I'd like you to paint 2 MASTERPIECES to go in my studio.
+// * [Can do!]
+//     -- N: You da bomb, [UserName].
+// * [I'm not a painter.]
+//     -- PlayVideo_ThatDoesntMatter TODO: This.
+
+- FuncContinue_HideCharViews
+- FuncContinue_MinigameStepForward
+- ShowTapToContinue(1.1)
+
 - N: Try to make them as good as possible, and see how it affects your {wcS}PRAISEWORTHINESS{wcE}.
 - FuncContinue_ShowWorthyMeter
+- FuncContinue_SetWorthyMeterNoun:PRAISEWORTHY
+- FuncContinue_SetWorthyMeterPercentFull:1
 - ShowTapToContinue(1.2)
+- N: Oh, look! You're already at 100%!\\n\\nI wonder if that can change?
+
+- FuncContinue_HideCharViews
+- FuncHalt_MinigameStepForward
+
+- FuncContinue_MinigameStepForward
+- N: What a masterpiece!\\nDo the other one now!
+
+- FuncContinue_HideCharViews
+- FuncHalt_MinigameStepForward
+
+- FuncContinue_MinigameStepForward
+- ShowTapToContinue(1.2)
+
+- N: These are beautiful! And your {worth} was never in question.
+
+
 - ->END
 
 
 === PostPainter ===
-- N: Look at these beautiful paintings!
+- FuncContinue_SetBackgroundImage:GarbageDump
+- N: Now make two TERRIBLE paintings.
 - -> END
 
 

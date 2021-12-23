@@ -63,8 +63,11 @@ public class CharView : BaseViewElement {
     public void SetBodyImage(string imgName) {
         i_body.sprite = Resources.Load<Sprite>("Images/CharViews/" + imgName);
     }
-    
-    
+    public void SetBodyVisible(bool val) {
+        i_body.enabled = val;
+    }
+
+
     // ----------------------------------------------------------------
     //  Doers
     // ----------------------------------------------------------------
@@ -122,7 +125,6 @@ public class CharView : BaseViewElement {
         numCharsRevealed = speechTextFull.Length;
         UpdateSpeechTextDisplay();
     }
-
 
 
     // ----------------------------------------------------------------

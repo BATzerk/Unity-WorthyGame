@@ -34,7 +34,7 @@ public class MinigameController : BaseViewElement {
         Minigame[] allMinigamesArray = GetComponentsInChildren<Minigame>(true);
         allMinigames = new Dictionary<string, Minigame>();
         foreach (Minigame m in allMinigamesArray) {
-            m.Initialize(this);
+            m.Initialize(gameController, this);
             allMinigames.Add(m.name, m);
         }
     }
@@ -57,7 +57,7 @@ public class MinigameController : BaseViewElement {
     // ----------------------------------------------------------------
     //  Start / End Minigames
     // ----------------------------------------------------------------
-    public void StartMinigame(string _name) {
+    public void OpenMinigame(string _name) {
         SetVisible(true);
         //// Set round values.
         //CurrMinigameIndex = _mgIndex;//roundDatas[CurrRoundIndex];
@@ -83,6 +83,10 @@ public class MinigameController : BaseViewElement {
     private void HideAllMinigames() {
         //b_endMinigame.gameObject.SetActive(false); // hide DONE for now.
         foreach (Minigame m in allMinigames.Values) { m.Hide(); }
+    }
+
+    public void MinigameStepForward() {
+        currMinigame?.StepForward();
     }
 
 

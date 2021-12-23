@@ -14,7 +14,7 @@ public class BranchingStoryController : BaseViewElement {
     [SerializeField] private GameController gameController=null;
     [SerializeField] private ChoiceButton[] choiceBtns=null;
     [SerializeField] private GridLayoutGroup choiceBtnLayoutGroup=null;
-    [SerializeField] private TextMeshProUGUI t_tapToContinue=null;
+    [SerializeField] private GameObject tapToContinue=null;
     // Properties
     private bool autoAdvanceAfterSpeech;
     private bool mayClickToNextStep;
@@ -36,6 +36,7 @@ public class BranchingStoryController : BaseViewElement {
     
     // Getters (Private)
     private Story currStory { get { return currStorySource?.MyStory; } }
+    private MinigameController minigameCont { get { return gameController.MinigameCont; } }
     private string FillInBlanks(string str) {
         // Replace text unique to this IStorySource.
         str = currStorySource.FillInBlanks(str);
@@ -154,6 +155,7 @@ public class BranchingStoryController : BaseViewElement {
                     break;
                 }
                 else if (line.StartsWith("Func", ivc)) {
+                    line = line.TrimEnd(); // cut any return characters while looking for function names.
                     // What kinda func?
                     if (line.StartsWith("FuncContinue_", ivc)) { // Will do func AFTER user tap, and KEEP going into next Inky line.
                         line = line.Substring(13); // trim the "FuncContinue_" off.
@@ -170,9 +172,18 @@ public class BranchingStoryController : BaseViewElement {
                         Debug.LogError("Func string not valid: \"" + line + "\"");
                     }
                     if (line.StartsWith("HideCharViews", ivc)) { charViewHandler.HideAllChars(); }
+                    else if (line.StartsWith("HideCharViewBody", ivc)) { charViewHandler.HideCharBody(line.Substring(17)); }
                     else if (line.StartsWith("HideWorthyMeter", ivc)) { gameController.HideWorthyMeter(); }
                     else if (line.StartsWith("ShowWorthyMeter", ivc)) { gameController.ShowWorthyMeter(); }
-                    else if (line.StartsWith("SetBackgroundImage", ivc)) { gameController.SetBackgroundImage(line.Substring(19).TrimEnd()); }
+                    else if (line.StartsWith("MinigameStepForward", ivc)) { minigameCont.MinigameStepForward(); }
+                    else if (line.StartsWith("OpenMinigame", ivc)) { minigameCont.OpenMinigame(line.Substring(13)); }
+                    else if (line.StartsWith("SetBackgroundImage", ivc)) { gameController.SetBackgroundImage(line.Substring(19)); }
+                    else if (line.StartsWith("SetWorthyMeterNoun", ivc)) { gameController.SetWorthyMeterNoun(line.Substring(19)); }
+                    else if (line.StartsWith("SetWorthyMeterPercentFull", ivc)) {
+                        float percent;
+                        float.TryParse(line.Substring(26), out percent);
+                        gameController.SetWorthyMeterPercentFull(percent);
+                    }
                     else { currStorySource.DoFuncFromStory(line); }
                     break;
                 }
@@ -198,7 +209,7 @@ public class BranchingStoryController : BaseViewElement {
     // ----------------------------------------------------------------
     private void SetMayClickToNextStep(bool val) {
         mayClickToNextStep = val;
-        t_tapToContinue.enabled = mayClickToNextStep;
+        tapToContinue.SetActive(mayClickToNextStep);
     }
     private void SetMayClickToNextStepTrue() { SetMayClickToNextStep(true); }
     private void HideChoiceButtons() {

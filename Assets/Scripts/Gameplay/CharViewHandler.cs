@@ -31,7 +31,16 @@ public class CharViewHandler : MonoBehaviour {
             cv.ClearSpeechText();
         }
     }
-    
+    public void HideCharBody(string charName) {
+        if (charName.Equals("N")) {
+            charsList[0].SetBodyVisible(false);
+        }
+        else {
+            Debug.LogError("CharName not recognized for HideCharBody: \"" + charName + "\"");
+        }
+    }
+
+
     public void SetCharTextFromLine(string line) {
         // Find the CharView who's speaking, based on "Abc: " prefix.
         CharView cv=null;

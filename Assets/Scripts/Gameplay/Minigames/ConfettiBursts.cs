@@ -12,9 +12,9 @@ public class ConfettiBursts : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI t_header1;
 
     // Events
-    public void PlayBurst(string worthyNoun) {
+    public void PlayBurst(string percentChange, string worthyNoun) {
         // Update texts.
-        string str = "<size=200>+0%</size>\n" + worthyNoun;
+        string str = "<size=200>" + percentChange + "</size>\n" + worthyNoun;
         t_header0.text = str;
         t_header1.text = str;
 
