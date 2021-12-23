@@ -11,7 +11,7 @@ VAR Jill = "<color=\#d9b212>Jill</color>"
 
 
 === GameIntro ===
-/*QQQ
+//*
 - FuncContinue_SetBackgroundImage:YellowOrange
 - N: Hi, [UserName]! I'm Waddlesworth Worthington III.
 - N: But you can call me {Jill}.
@@ -30,7 +30,7 @@ VAR Jill = "<color=\#d9b212>Jill</color>"
 - N: Do you sometimes feel not good enough?
 * [Never.]
     -- N: You always feel good enough?
-    ** [I do!]
+    ** [Yep, pretty much.]
         --- N: Beautiful!\\n\\nThen this should be a pretty cozy experience.
     ** [More or less.]
         --- N: Beautiful!\\n\\nThen this should be a pretty cozy experience.
@@ -49,17 +49,18 @@ VAR Jill = "<color=\#d9b212>Jill</color>"
     ** [Oh, boy!]
     ** [Oh. Boy.]
     -- N: That's the spirit, [UserName]!
-*/
+//*/
 
 
 - N: No matter WHAT you do, you'll ALWAYS be {worthy}.
 - FuncContinue_OpenMinigame_Painter
 - FuncContinue_HideCharViewBody_N
 - N: I'd like you to paint 2 MASTERPIECES to go in my studio.
-// * [Can do!]
-//     -- N: You da bomb, [UserName].
-// * [I'm not a painter.]
-//     -- PlayVideo_ThatDoesntMatter TODO: This.
+* [Can do!]
+    -- N: You da bomb, [UserName].
+* [I'm not a painter...]
+    -- FuncContinue_PlayVideo_DoesntMatter
+    -- ShowTapToContinue(1.1)
 
 - FuncContinue_HideCharViews
 - FuncContinue_MinigameStepForward
@@ -84,7 +85,7 @@ VAR Jill = "<color=\#d9b212>Jill</color>"
 - FuncContinue_MinigameStepForward
 - ShowTapToContinue(1.2)
 
-- N: These are beautiful! And your {worth} was never in question.
+- N: These are beautiful!\\nAnd your 100% {worth} was never in question.
 
 
 - ->END
@@ -177,13 +178,13 @@ VAR Jill = "<color=\#d9b212>Jill</color>"
 === PostJokeTeller ===
 - N: Ha ha! Those were some funny jokes!
 - N: But it doesn't look as if telling jokes changed your deservingness of good friendships.
-- N: Maybe the WorthyMeter is broken? Can we check?
+// - N: Maybe the WorthyMeter is broken? Can we check?
 - N: Try saying something dumb to bring down your worthiness a little bit.
 * [i'm a astronot]
 * [I need a vacation... from MY VACATION!!!]
 * [soup's up! no wait I mean surf's up oh no]
 * [bimgo bamgo bonjo gingoo]
-* [I need to put my hands in your pockets. It's an emergency.]
+// * [I need to put my hands in your pockets. It's an emergency.]
 - N: Hmm.
 - N: I mean, that was a really dumb thing to say.
 - N: ...But apparently you're still 100% worthy of good friendships.

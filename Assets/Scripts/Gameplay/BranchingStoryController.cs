@@ -60,6 +60,7 @@ public class BranchingStoryController : BaseViewElement {
     override protected void Awake() {
         base.Awake();
         NullifyCurrStory();
+        choiceBtnLayoutGroup.gameObject.SetActive(true); // in case it's hidden in editor.
         
         // Add event listeners!
         GameManagers.Instance.EventManager.CharFinishedRevealingSpeechTextEvent += OnCharFinishedRevealingSpeechText;
@@ -177,6 +178,7 @@ public class BranchingStoryController : BaseViewElement {
                     else if (line.StartsWith("ShowWorthyMeter", ivc)) { gameController.ShowWorthyMeter(); }
                     else if (line.StartsWith("MinigameStepForward", ivc)) { minigameCont.MinigameStepForward(); }
                     else if (line.StartsWith("OpenMinigame", ivc)) { minigameCont.OpenMinigame(line.Substring(13)); }
+                    else if (line.StartsWith("PlayVideo", ivc)) { gameController.VideoClipController.PlayVideo(line.Substring(10)); }
                     else if (line.StartsWith("SetBackgroundImage", ivc)) { gameController.SetBackgroundImage(line.Substring(19)); }
                     else if (line.StartsWith("SetWorthyMeterNoun", ivc)) { gameController.SetWorthyMeterNoun(line.Substring(19)); }
                     else if (line.StartsWith("SetWorthyMeterPercentFull", ivc)) {

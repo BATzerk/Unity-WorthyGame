@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] private GameObject go_nextButton=null;
     [SerializeField] private Image i_background = null;
     [SerializeField] private TextMeshProUGUI t_nextButton=null;
+    [SerializeField] private VideoClipController videoClipController=null;
     [SerializeField] private WorthyMeter worthyMeter = null;
     // Main Views
     [SerializeField] private MinigameController minigameCont=null;
@@ -27,6 +28,7 @@ public class GameController : MonoBehaviour {
     public GameTimeController GameTimeCont { get { return gameTimeCont; } }
     public MinigameController MinigameCont { get { return minigameCont; } }
     public BranchingStoryController StoryCont { get { return storyCont; } }
+    public VideoClipController VideoClipController { get { return videoClipController; } }
     // Getters (Private)
     private ContentManager cm { get { return GameManagers.Instance.ContentManager; } }
     private DataManager dm { get { return GameManagers.Instance.DataManager; } }
