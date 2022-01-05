@@ -60,7 +60,7 @@ public class BranchingStoryController : BaseViewElement {
     override protected void Awake() {
         base.Awake();
         NullifyCurrStory();
-        choiceBtnLayoutGroup.gameObject.SetActive(true); // in case it's hidden in editor.
+        HideChoiceButtons();
         
         // Add event listeners!
         GameManagers.Instance.EventManager.CharFinishedRevealingSpeechTextEvent += OnCharFinishedRevealingSpeechText;
@@ -174,6 +174,7 @@ public class BranchingStoryController : BaseViewElement {
                     }
                     if (line.StartsWith("HideCharViews", ivc)) { charViewHandler.HideAllChars(); }
                     else if (line.StartsWith("HideCharViewBody", ivc)) { charViewHandler.HideCharBody(line.Substring(17)); }
+                    else if (line.StartsWith("ShowCharViewBody", ivc)) { charViewHandler.ShowCharBody(line.Substring(17)); }
                     else if (line.StartsWith("HideWorthyMeter", ivc)) { gameController.HideWorthyMeter(); }
                     else if (line.StartsWith("ShowWorthyMeter", ivc)) { gameController.ShowWorthyMeter(); }
                     else if (line.StartsWith("MinigameStepForward", ivc)) { minigameCont.MinigameStepForward(); }
@@ -218,6 +219,7 @@ public class BranchingStoryController : BaseViewElement {
         choiceBtnsAnimator.Play("ChoiceBtnsHide");
     }
     private void ShowChoiceBtns() {
+        choiceBtnLayoutGroup.gameObject.SetActive(true); // in case it was hidden in editor.
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null); // deselect any currently selected buttons.
         foreach (ChoiceButton button in choiceBtns) {
             button.ResetVisuals();

@@ -31,9 +31,11 @@ public class CharViewHandler : MonoBehaviour {
             cv.ClearSpeechText();
         }
     }
-    public void HideCharBody(string charName) {
+    public void HideCharBody(string charName) { SetCharBodyVisible(charName, false); }
+    public void ShowCharBody(string charName) { SetCharBodyVisible(charName, true); }
+    private void SetCharBodyVisible(string charName, bool isVisible) {
         if (charName.Equals("N")) {
-            charsList[0].SetBodyVisible(false);
+            charsList[0].SetBodyVisible(isVisible);
         }
         else {
             Debug.LogError("CharName not recognized for HideCharBody: \"" + charName + "\"");

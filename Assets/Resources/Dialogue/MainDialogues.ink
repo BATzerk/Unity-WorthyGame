@@ -13,11 +13,10 @@ VAR Jill = "<color=\#d9b212>Jill</color>"
 === GameIntro ===
 //*
 - FuncContinue_SetBackgroundImage:YellowOrange
-- N: Hi, [UserName]! I'm Waddlesworth Worthington III.
+- N: Hi, [UserName]!\\nI'm Waddlesworth Worthington III.
 - N: But you can call me {Jill}.
 * [Hi, {Jill}.]
 - N: This is not a video game.\\n\\nIt's a reminder:
-// * [A reminder of what?]
 - N: You.\\n\\nAre.\\n\\n{Worthy}.
 * [Mmm... Idk, {Jill}.]
     -- N: Well, how worthy do you feel?
@@ -85,18 +84,27 @@ VAR Jill = "<color=\#d9b212>Jill</color>"
 - FuncContinue_MinigameStepForward
 - ShowTapToContinue(1.2)
 
-- N: These are beautiful!\\nAnd your 100% {worth} was never in question.
+- N: This is art.\\nThis is proper art.\\nAnd your 100% {worth} was never in question.
 
 
 - ->END
 
 
 === PostPainter ===
-- FuncContinue_SetBackgroundImage:GarbageDump
-- N: Now make two TERRIBLE paintings.
+// - FuncContinue_SetBackgroundImage:GarbageDump
+- FuncContinue_ShowCharViewBody_N
+- N: Let's see if we can LOWER your {wcS}praiseworthiness{wcE}.\\n\\nI want you to make two TERRIBLE paintings.
+- N: Make 'em real bad.
 - -> END
 
 
+
+=== PostPainterTerrible ===
+- N: Wow, those were some terrible paintings.\\n\\nPoo emojis were a nice touch.
+- N: And your {wcS}praiseworthiness{wcE} is still at 100%.
+- N: There is nothing you can do to change how {wcS}worthy you are of praise{wcE}.
+- N: - END OF CONTENT FOR NOW -
+- -> END
 
 
 

@@ -21,7 +21,7 @@ namespace MinigameNamespace {
         private bool mayPaint;
         private Vector2 brushPosPrev;
         private int currPaintingIndex;
-        private const int NumPaintingsRequired = 3;
+        private const int NumPaintingsRequired = 2;
         private Color brushColor = new Color255(109, 61, 18, 200).ToColor();
         private float brushThickness = 7;
         // References
